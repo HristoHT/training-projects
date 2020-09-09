@@ -1,0 +1,265 @@
+{"nameObstina":"Аврен","obstina":"VAR01","oblast":"VAR"}
+{"nameObstina":"Долна баня","obstina":"SFO59","oblast":"SFO"}
+{"nameObstina":"Айтос","obstina":"BGS01","oblast":"BGS"}
+{"nameObstina":"Аксаково","obstina":"VAR02","oblast":"VAR"}
+{"nameObstina":"Алфатар","obstina":"SLS01","oblast":"SLS"}
+{"nameObstina":"Антон","obstina":"SFO54","oblast":"SFO"}
+{"nameObstina":"Антоново","obstina":"TGV02","oblast":"TGV"}
+{"nameObstina":"Априлци","obstina":"LOV02","oblast":"LOV"}
+{"nameObstina":"Ардино","obstina":"KRZ02","oblast":"KRZ"}
+{"nameObstina":"Асеновград","obstina":"PDV01","oblast":"PDV"}
+{"nameObstina":"Балчик","obstina":"DOB03","oblast":"DOB"}
+{"nameObstina":"Баните","obstina":"SML02","oblast":"SML"}
+{"nameObstina":"Банско","obstina":"BLG01","oblast":"BLG"}
+{"nameObstina":"Батак","obstina":"PAZ03","oblast":"PAZ"}
+{"nameObstina":"Белене","obstina":"PVN03","oblast":"PVN"}
+{"nameObstina":"Белица","obstina":"BLG02","oblast":"BLG"}
+{"nameObstina":"Белово","obstina":"PAZ04","oblast":"PAZ"}
+{"nameObstina":"Белоградчик","obstina":"VID01","oblast":"VID"}
+{"nameObstina":"Белослав","obstina":"VAR04","oblast":"VAR"}
+{"nameObstina":"Берковица","obstina":"MON02","oblast":"MON"}
+{"nameObstina":"Благоевград","obstina":"BLG03","oblast":"BLG"}
+{"nameObstina":"Бобов дол","obstina":"KNL04","oblast":"KNL"}
+{"nameObstina":"Бобошево","obstina":"KNL05","oblast":"KNL"}
+{"nameObstina":"Божурище","obstina":"SFO06","oblast":"SFO"}
+{"nameObstina":"Бойница","obstina":"VID03","oblast":"VID"}
+{"nameObstina":"Бойчиновци","obstina":"MON04","oblast":"MON"}
+{"nameObstina":"Болярово","obstina":"JAM03","oblast":"JAM"}
+{"nameObstina":"Борино","obstina":"SML05","oblast":"SML"}
+{"nameObstina":"Борован","obstina":"VRC05","oblast":"VRC"}
+{"nameObstina":"Борово","obstina":"RSE03","oblast":"RSE"}
+{"nameObstina":"Ботевград","obstina":"SFO07","oblast":"SFO"}
+{"nameObstina":"Братя Даскалови","obstina":"SZR04","oblast":"SZR"}
+{"nameObstina":"Брацигово","obstina":"PAZ06","oblast":"PAZ"}
+{"nameObstina":"Брегово","obstina":"VID06","oblast":"VID"}
+{"nameObstina":"Брезник","obstina":"PER08","oblast":"PER"}
+{"nameObstina":"Брезово","obstina":"PDV07","oblast":"PDV"}
+{"nameObstina":"Брусарци","obstina":"MON07","oblast":"MON"}
+{"nameObstina":"Бургас","obstina":"BGS04","oblast":"BGS"}
+{"nameObstina":"Бяла","obstina":"RSE04","oblast":"RSE"}
+{"nameObstina":"Бяла","obstina":"VAR05","oblast":"VAR"}
+{"nameObstina":"Бяла Слатина","obstina":"VRC08","oblast":"VRC"}
+{"nameObstina":"Варна","obstina":"VAR06","oblast":"VAR"}
+{"nameObstina":"Велики Преслав","obstina":"SHU23","oblast":"SHU"}
+{"nameObstina":"Велико Търново","obstina":"VTR04","oblast":"VTR"}
+{"nameObstina":"Велинград","obstina":"PAZ08","oblast":"PAZ"}
+{"nameObstina":"Венец","obstina":"SHU07","oblast":"SHU"}
+{"nameObstina":"Ветово","obstina":"RSE05","oblast":"RSE"}
+{"nameObstina":"Ветрино","obstina":"VAR08","oblast":"VAR"}
+{"nameObstina":"Видин","obstina":"VID09","oblast":"VID"}
+{"nameObstina":"Враца","obstina":"VRC10","oblast":"VRC"}
+{"nameObstina":"Вълчедръм","obstina":"MON11","oblast":"MON"}
+{"nameObstina":"Вълчи дол","obstina":"VAR09","oblast":"VAR"}
+{"nameObstina":"Върбица","obstina":"SHU10","oblast":"SHU"}
+{"nameObstina":"Вършец","obstina":"MON12","oblast":"MON"}
+{"nameObstina":"Габрово","obstina":"GAB05","oblast":"GAB"}
+{"nameObstina":"Генерал Тошево","obstina":"DOB12","oblast":"DOB"}
+{"nameObstina":"Георги Дамяново","obstina":"MON14","oblast":"MON"}
+{"nameObstina":"Главиница","obstina":"SLS07","oblast":"SLS"}
+{"nameObstina":"Годеч","obstina":"SFO09","oblast":"SFO"}
+{"nameObstina":"Горна Малина","obstina":"SFO10","oblast":"SFO"}
+{"nameObstina":"Горна Оряховица","obstina":"VTR06","oblast":"VTR"}
+{"nameObstina":"Гоце Делчев","obstina":"BLG11","oblast":"BLG"}
+{"nameObstina":"Грамада","obstina":"VID15","oblast":"VID"}
+{"nameObstina":"Гулянци","obstina":"PVN08","oblast":"PVN"}
+{"nameObstina":"Гурково","obstina":"SZR37","oblast":"SZR"}
+{"nameObstina":"Гълъбово","obstina":"SZR07","oblast":"SZR"}
+{"nameObstina":"Гърмен","obstina":"BLG13","oblast":"BLG"}
+{"nameObstina":"Две могили","obstina":"RSE08","oblast":"RSE"}
+{"nameObstina":"Девин","obstina":"SML09","oblast":"SML"}
+{"nameObstina":"Девня","obstina":"VAR14","oblast":"VAR"}
+{"nameObstina":"Джебел","obstina":"KRZ08","oblast":"KRZ"}
+{"nameObstina":"Димитровград","obstina":"HKV09","oblast":"HKV"}
+{"nameObstina":"Димово","obstina":"VID16","oblast":"VID"}
+{"nameObstina":"Добрич-селска","obstina":"DOB15","oblast":"DOB"}
+{"nameObstina":"Добрич","obstina":"DOB28","oblast":"DOB"}
+{"nameObstina":"Долна Митрополия","obstina":"PVN10","oblast":"PVN"}
+{"nameObstina":"Долни Дъбник","obstina":"PVN11","oblast":"PVN"}
+{"nameObstina":"Долни чифлик","obstina":"VAR13","oblast":"VAR"}
+{"nameObstina":"Доспат","obstina":"SML10","oblast":"SML"}
+{"nameObstina":"Драгоман","obstina":"SFO16","oblast":"SFO"}
+{"nameObstina":"Дряново","obstina":"GAB12","oblast":"GAB"}
+{"nameObstina":"Дулово","obstina":"SLS10","oblast":"SLS"}
+{"nameObstina":"Дупница","obstina":"KNL48","oblast":"KNL"}
+{"nameObstina":"Дългопол","obstina":"VAR16","oblast":"VAR"}
+{"nameObstina":"Елена","obstina":"VTR13","oblast":"VTR"}
+{"nameObstina":"Елин Пелин","obstina":"SFO17","oblast":"SFO"}
+{"nameObstina":"Елхово","obstina":"JAM07","oblast":"JAM"}
+{"nameObstina":"Етрополе","obstina":"SFO18","oblast":"SFO"}
+{"nameObstina":"Завет","obstina":"RAZ11","oblast":"RAZ"}
+{"nameObstina":"Земен","obstina":"PER19","oblast":"PER"}
+{"nameObstina":"Златарица","obstina":"VTR14","oblast":"VTR"}
+{"nameObstina":"Златица","obstina":"SFO47","oblast":"SFO"}
+{"nameObstina":"Златоград","obstina":"SML11","oblast":"SML"}
+{"nameObstina":"Ивайловград","obstina":"HKV11","oblast":"HKV"}
+{"nameObstina":"Иваново","obstina":"RSE13","oblast":"RSE"}
+{"nameObstina":"Искър","obstina":"PVN23","oblast":"PVN"}
+{"nameObstina":"Исперих","obstina":"RAZ14","oblast":"RAZ"}
+{"nameObstina":"Ихтиман","obstina":"SFO20","oblast":"SFO"}
+{"nameObstina":"Каварна","obstina":"DOB17","oblast":"DOB"}
+{"nameObstina":"Казанлък","obstina":"SZR12","oblast":"SZR"}
+{"nameObstina":"Кайнарджа","obstina":"SLS15","oblast":"SLS"}
+{"nameObstina":"Калояново","obstina":"PDV12","oblast":"PDV"}
+{"nameObstina":"Камено","obstina":"BGS08","oblast":"BGS"}
+{"nameObstina":"Каолиново","obstina":"SHU18","oblast":"SHU"}
+{"nameObstina":"Карлово","obstina":"PDV13","oblast":"PDV"}
+{"nameObstina":"Карнобат","obstina":"BGS09","oblast":"BGS"}
+{"nameObstina":"Каспичан","obstina":"SHU19","oblast":"SHU"}
+{"nameObstina":"Кирково","obstina":"KRZ14","oblast":"KRZ"}
+{"nameObstina":"Кнежа","obstina":"PVN39","oblast":"PVN"}
+{"nameObstina":"Ковачевци","obstina":"PER22","oblast":"PER"}
+{"nameObstina":"Козлодуй","obstina":"VRC20","oblast":"VRC"}
+{"nameObstina":"Копривщица","obstina":"SFO24","oblast":"SFO"}
+{"nameObstina":"Костенец","obstina":"SFO25","oblast":"SFO"}
+{"nameObstina":"Костинброд","obstina":"SFO26","oblast":"SFO"}
+{"nameObstina":"Котел","obstina":"SLV11","oblast":"SLV"}
+{"nameObstina":"Кочериново","obstina":"KNL27","oblast":"KNL"}
+{"nameObstina":"Кресна","obstina":"BLG28","oblast":"BLG"}
+{"nameObstina":"Криводол","obstina":"VRC21","oblast":"VRC"}
+{"nameObstina":"Кричим","obstina":"PDV39","oblast":"PDV"}
+{"nameObstina":"Крумовград","obstina":"KRZ15","oblast":"KRZ"}
+{"nameObstina":"Крушари","obstina":"DOB20","oblast":"DOB"}
+{"nameObstina":"Кубрат","obstina":"RAZ16","oblast":"RAZ"}
+{"nameObstina":"Куклен","obstina":"PDV42","oblast":"PDV"}
+{"nameObstina":"Кула","obstina":"VID22","oblast":"VID"}
+{"nameObstina":"Кърджали","obstina":"KRZ16","oblast":"KRZ"}
+{"nameObstina":"Кюстендил","obstina":"KNL29","oblast":"KNL"}
+{"nameObstina":"Левски","obstina":"PVN16","oblast":"PVN"}
+{"nameObstina":"Лесичово","obstina":"PAZ14","oblast":"PAZ"}
+{"nameObstina":"Летница","obstina":"LOV17","oblast":"LOV"}
+{"nameObstina":"Ловеч","obstina":"LOV18","oblast":"LOV"}
+{"nameObstina":"Лозница","obstina":"RAZ17","oblast":"RAZ"}
+{"nameObstina":"Лом","obstina":"MON24","oblast":"MON"}
+{"nameObstina":"Луковит","obstina":"LOV19","oblast":"LOV"}
+{"nameObstina":"Лъки","obstina":"PDV15","oblast":"PDV"}
+{"nameObstina":"Любимец","obstina":"HKV17","oblast":"HKV"}
+{"nameObstina":"Лясковец","obstina":"VTR20","oblast":"VTR"}
+{"nameObstina":"Мадан","obstina":"SML16","oblast":"SML"}
+{"nameObstina":"Маджарово","obstina":"HKV18","oblast":"HKV"}
+{"nameObstina":"Макреш","obstina":"VID25","oblast":"VID"}
+{"nameObstina":"Малко Търново","obstina":"BGS12","oblast":"BGS"}
+{"nameObstina":"Марица","obstina":"PDV17","oblast":"PDV"}
+{"nameObstina":"Медковец","obstina":"MON26","oblast":"MON"}
+{"nameObstina":"Мездра","obstina":"VRC27","oblast":"VRC"}
+{"nameObstina":"Мизия","obstina":"VRC28","oblast":"VRC"}
+{"nameObstina":"Минерални бани","obstina":"HKV19","oblast":"HKV"}
+{"nameObstina":"Мирково","obstina":"SFO56","oblast":"SFO"}
+{"nameObstina":"Момчилград","obstina":"KRZ21","oblast":"KRZ"}
+{"nameObstina":"Монтана","obstina":"MON29","oblast":"MON"}
+{"nameObstina":"Мъглиж","obstina":"SZR22","oblast":"SZR"}
+{"nameObstina":"Невестино","obstina":"KNL31","oblast":"KNL"}
+{"nameObstina":"Неделино","obstina":"SML18","oblast":"SML"}
+{"nameObstina":"Несебър","obstina":"BGS15","oblast":"BGS"}
+{"nameObstina":"Никола Козлево","obstina":"SHU21","oblast":"SHU"}
+{"nameObstina":"Николаево","obstina":"SZR38","oblast":"SZR"}
+{"nameObstina":"Никопол","obstina":"PVN21","oblast":"PVN"}
+{"nameObstina":"Нова Загора","obstina":"SLV16","oblast":"SLV"}
+{"nameObstina":"Нови пазар","obstina":"SHU22","oblast":"SHU"}
+{"nameObstina":"Ново село","obstina":"VID30","oblast":"VID"}
+{"nameObstina":"Омуртаг","obstina":"TGV22","oblast":"TGV"}
+{"nameObstina":"Опака","obstina":"TGV23","oblast":"TGV"}
+{"nameObstina":"Опан","obstina":"SZR23","oblast":"SZR"}
+{"nameObstina":"Оряхово","obstina":"VRC31","oblast":"VRC"}
+{"nameObstina":"Павел баня","obstina":"SZR24","oblast":"SZR"}
+{"nameObstina":"Павликени","obstina":"VTR22","oblast":"VTR"}
+{"nameObstina":"Пазарджик","obstina":"PAZ19","oblast":"PAZ"}
+{"nameObstina":"Панагюрище","obstina":"PAZ20","oblast":"PAZ"}
+{"nameObstina":"Перник","obstina":"PER32","oblast":"PER"}
+{"nameObstina":"Перущица","obstina":"PDV40","oblast":"PDV"}
+{"nameObstina":"Петрич","obstina":"BLG33","oblast":"BLG"}
+{"nameObstina":"Пещера","obstina":"PAZ21","oblast":"PAZ"}
+{"nameObstina":"Пирдоп","obstina":"SFO55","oblast":"SFO"}
+{"nameObstina":"Плевен","obstina":"PVN24","oblast":"PVN"}
+{"nameObstina":"Пловдив","obstina":"PDV22","oblast":"PDV"}
+{"nameObstina":"Полски Тръмбеш","obstina":"VTR26","oblast":"VTR"}
+{"nameObstina":"Поморие","obstina":"BGS17","oblast":"BGS"}
+{"nameObstina":"Попово","obstina":"TGV24","oblast":"TGV"}
+{"nameObstina":"Пордим","obstina":"PVN27","oblast":"PVN"}
+{"nameObstina":"Правец","obstina":"SFO34","oblast":"SFO"}
+{"nameObstina":"Приморско","obstina":"BGS27","oblast":"BGS"}
+{"nameObstina":"Провадия","obstina":"VAR24","oblast":"VAR"}
+{"nameObstina":"Първомай","obstina":"PDV23","oblast":"PDV"}
+{"nameObstina":"Раднево","obstina":"SZR27","oblast":"SZR"}
+{"nameObstina":"Радомир","obstina":"PER36","oblast":"PER"}
+{"nameObstina":"Разград","obstina":"RAZ26","oblast":"RAZ"}
+{"nameObstina":"Разлог","obstina":"BLG37","oblast":"BLG"}
+{"nameObstina":"Ракитово","obstina":"PAZ24","oblast":"PAZ"}
+{"nameObstina":"Раковски","obstina":"PDV25","oblast":"PDV"}
+{"nameObstina":"Рила","obstina":"KNL38","oblast":"KNL"}
+{"nameObstina":"Родопи","obstina":"PDV26","oblast":"PDV"}
+{"nameObstina":"Роман","obstina":"VRC32","oblast":"VRC"}
+{"nameObstina":"Рудозем","obstina":"SML27","oblast":"SML"}
+{"nameObstina":"Руен","obstina":"BGS18","oblast":"BGS"}
+{"nameObstina":"Ружинци","obstina":"VID33","oblast":"VID"}
+{"nameObstina":"Русе","obstina":"RSE27","oblast":"RSE"}
+{"nameObstina":"Садово","obstina":"PDV28","oblast":"PDV"}
+{"nameObstina":"Самоков","obstina":"SFO39","oblast":"SFO"}
+{"nameObstina":"Самуил","obstina":"RAZ29","oblast":"RAZ"}
+{"nameObstina":"Сандански","obstina":"BLG40","oblast":"BLG"}
+{"nameObstina":"Сапарева баня","obstina":"KNL41","oblast":"KNL"}
+{"nameObstina":"Сатовча","obstina":"BLG42","oblast":"BLG"}
+{"nameObstina":"Свиленград","obstina":"HKV28","oblast":"HKV"}
+{"nameObstina":"Свищов","obstina":"VTR28","oblast":"VTR"}
+{"nameObstina":"Своге","obstina":"SFO43","oblast":"SFO"}
+{"nameObstina":"Севлиево","obstina":"GAB29","oblast":"GAB"}
+{"nameObstina":"Септември","obstina":"PAZ29","oblast":"PAZ"}
+{"nameObstina":"Силистра","obstina":"SLS31","oblast":"SLS"}
+{"nameObstina":"Симеоновград","obstina":"HKV29","oblast":"HKV"}
+{"nameObstina":"Симитли","obstina":"BLG44","oblast":"BLG"}
+{"nameObstina":"Ситово","obstina":"SLS32","oblast":"SLS"}
+{"nameObstina":"Сливен","obstina":"SLV20","oblast":"SLV"}
+{"nameObstina":"Сливница","obstina":"SFO45","oblast":"SFO"}
+{"nameObstina":"Сливо поле","obstina":"RSE33","oblast":"RSE"}
+{"nameObstina":"Смолян","obstina":"SML31","oblast":"SML"}
+{"nameObstina":"Смядово","obstina":"SHU25","oblast":"SHU"}
+{"nameObstina":"Созопол","obstina":"BGS21","oblast":"BGS"}
+{"nameObstina":"Сопот","obstina":"PDV43","oblast":"PDV"}
+{"nameObstina":"Столична","obstina":"SOF46","oblast":"SOF"}
+{"nameObstina":"Средец","obstina":"BGS06","oblast":"BGS"}
+{"nameObstina":"Стамболийски","obstina":"PDV41","oblast":"PDV"}
+{"nameObstina":"Стамболово","obstina":"HKV30","oblast":"HKV"}
+{"nameObstina":"Стара Загора","obstina":"SZR31","oblast":"SZR"}
+{"nameObstina":"Стражица","obstina":"VTR31","oblast":"VTR"}
+{"nameObstina":"Стралджа","obstina":"JAM22","oblast":"JAM"}
+{"nameObstina":"Стрелча","obstina":"PAZ32","oblast":"PAZ"}
+{"nameObstina":"Струмяни","obstina":"BLG49","oblast":"BLG"}
+{"nameObstina":"Суворово","obstina":"VAR26","oblast":"VAR"}
+{"nameObstina":"Сунгурларе","obstina":"BGS23","oblast":"BGS"}
+{"nameObstina":"Сухиндол","obstina":"VTR32","oblast":"VTR"}
+{"nameObstina":"Съединение","obstina":"PDV33","oblast":"PDV"}
+{"nameObstina":"Сърница","obstina":"PAZ39","oblast":"PAZ"}
+{"nameObstina":"Твърдица","obstina":"SLV24","oblast":"SLV"}
+{"nameObstina":"Тервел","obstina":"DOB27","oblast":"DOB"}
+{"nameObstina":"Тетевен","obstina":"LOV33","oblast":"LOV"}
+{"nameObstina":"Тополовград","obstina":"HKV32","oblast":"HKV"}
+{"nameObstina":"Трекляно","obstina":"KNL50","oblast":"KNL"}
+{"nameObstina":"Троян","obstina":"LOV34","oblast":"LOV"}
+{"nameObstina":"Трън","obstina":"PER51","oblast":"PER"}
+{"nameObstina":"Трявна","obstina":"GAB35","oblast":"GAB"}
+{"nameObstina":"Тунджа","obstina":"JAM25","oblast":"JAM"}
+{"nameObstina":"Тутракан","obstina":"SLS34","oblast":"SLS"}
+{"nameObstina":"Търговище","obstina":"TGV35","oblast":"TGV"}
+{"nameObstina":"Угърчин","obstina":"LOV36","oblast":"LOV"}
+{"nameObstina":"Хаджидимово","obstina":"BLG52","oblast":"BLG"}
+{"nameObstina":"Хайредин","obstina":"VRC35","oblast":"VRC"}
+{"nameObstina":"Харманли","obstina":"HKV33","oblast":"HKV"}
+{"nameObstina":"Хасково","obstina":"HKV34","oblast":"HKV"}
+{"nameObstina":"Хисаря","obstina":"PDV37","oblast":"PDV"}
+{"nameObstina":"Хитрино","obstina":"SHU11","oblast":"SHU"}
+{"nameObstina":"Цар Калоян","obstina":"RAZ36","oblast":"RAZ"}
+{"nameObstina":"Царево","obstina":"BGS13","oblast":"BGS"}
+{"nameObstina":"Ценово","obstina":"RSE37","oblast":"RSE"}
+{"nameObstina":"Чавдар","obstina":"SFO57","oblast":"SFO"}
+{"nameObstina":"Челопеч","obstina":"SFO58","oblast":"SFO"}
+{"nameObstina":"Чепеларе","obstina":"SML38","oblast":"SML"}
+{"nameObstina":"Червен бряг","obstina":"PVN37","oblast":"PVN"}
+{"nameObstina":"Черноочене","obstina":"KRZ35","oblast":"KRZ"}
+{"nameObstina":"Чипровци","obstina":"MON36","oblast":"MON"}
+{"nameObstina":"Чирпан","obstina":"SZR36","oblast":"SZR"}
+{"nameObstina":"Чупрене","obstina":"VID37","oblast":"VID"}
+{"nameObstina":"Шабла","obstina":"DOB29","oblast":"DOB"}
+{"nameObstina":"Шумен","obstina":"SHU30","oblast":"SHU"}
+{"nameObstina":"Ябланица","obstina":"LOV38","oblast":"LOV"}
+{"nameObstina":"Якимово","obstina":"MON38","oblast":"MON"}
+{"nameObstina":"Якоруда","obstina":"BLG53","oblast":"BLG"}
+{"nameObstina":"Ямбол","obstina":"JAM26","oblast":"JAM"}

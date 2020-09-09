@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .options {
+            width: 450px;
+            height: 300px;
+            background-color: #e1e1e1;
+            padding: 3px;
+        }
+
+        .options-button {
+            width: 450px;
+        }
+
+        .options>.options-row {
+            margin: 10px;
+        }
+
+        .options>.options-row>input {
+            padding: 0px !important;
+            width: 80px;
+            float: right;
+        }
+
+        .options>.options-row label {
+            /* Other styling... */
+            clear: both;
+            float: right;
+            text-align: left;
+            align-content: space-between !important;
+        }
+
+        input {
+            padding: 0px !important;
+            width: 80px !important;
+        }
+
+        p,
+        input,
+        label {
+            display: inline-block !important;
+        }
+
+        .button {
+            background-color: #fafafa;
+            width: 40px;
+            cursor: pointer;
+        }
+
+        .button:hover{
+            background-color: #e1e1e1;
+            border: 1px solid #fafafa
+        }
+
+        #fromDate,
+        #toDate {
+            width: 120px !important;
+        }
+    </style>
+    <div style="z-index: 100001; background:red; position: absolute; top:0">
+        <div class="options">
+            <div class="options-row">
+                Дата:
+                <label for="depth">
+                    от <input type="date" id="fromDate">
+                    до <input type="date" id="toDate">
+                </label>
+            </div>
+            <div class="options-row">
+                Магнитуд:
+                <label for="magnitude">
+                    от <input type="number" min="1" max="10" id="magnitudeMin">
+                    до <input type="number" min="1" max="10" id="magnitudeMax">
+                </label>
+            </div>
+            <div class="options-row">
+                Дълбочина(m.):
+                <label for="depth">
+                    от <input type="number" min="1" max="1000" id="depthMin">
+                    до <input type="number" min="1" max="1000" id="depthMax">
+                </label>
+            </div>
+
+            <div class="options-row">
+                Квадратна зона:
+                <br />
+                Координати на горен ляв ъгъл:<br />
+                <label style="text-align: center;">
+                    (<input type="number" id="topLeftX">
+                    ,<input type="number" id="topLeftY">)
+                </label><br />
+                Координати на долен десен ъгъл:<br />
+                <label style="text-align: center;">
+                    (<input type="number" id="bottomRightX">,
+                    <input type="number" id="bottomRightY">)
+                </label><br />
+            </div>
+            <div class="options-button" style="text-align: center;margin-top: 10px;">
+                <center>
+                    <div class="button">
+                        Go
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

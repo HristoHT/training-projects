@@ -1,0 +1,21 @@
+{
+  "name": "task2",
+  "version": "1.0.0",
+  "description": "Postgres related task",
+  "main": "main.js",
+  "scripts": {
+    "run": "node main.js",
+    "server": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HHT",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "node-xlsx": "^0.15.0",
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.2",
+    "sqlutils": "^1.2.0"
+  }
+}

@@ -1,0 +1,28 @@
+{"nameoblast":"Благоевград","oblast":"BLG"}
+{"nameoblast":"Бургас","oblast":"BGS"}
+{"nameoblast":"Варна","oblast":"VAR"}
+{"nameoblast":"Велико Търново","oblast":"VTR"}
+{"nameoblast":"Видин","oblast":"VID"}
+{"nameoblast":"Враца","oblast":"VRC"}
+{"nameoblast":"Габрово","oblast":"GAB"}
+{"nameoblast":"Добрич","oblast":"DOB"}
+{"nameoblast":"Кърджали","oblast":"KRZ"}
+{"nameoblast":"Кюстендил","oblast":"KNL"}
+{"nameoblast":"Ловеч","oblast":"LOV"}
+{"nameoblast":"Монтана","oblast":"MON"}
+{"nameoblast":"Пазарджик","oblast":"PAZ"}
+{"nameoblast":"Перник","oblast":"PER"}
+{"nameoblast":"Плевен","oblast":"PVN"}
+{"nameoblast":"Пловдив","oblast":"PDV"}
+{"nameoblast":"Разград","oblast":"RAZ"}
+{"nameoblast":"Русе","oblast":"RSE"}
+{"nameoblast":"Силистра","oblast":"SLS"}
+{"nameoblast":"Сливен","oblast":"SLV"}
+{"nameoblast":"Смолян","oblast":"SML"}
+{"nameoblast":"София","oblast":"SFO"}
+{"nameoblast":"София (столица)","oblast":"SOF"}
+{"nameoblast":"Стара Загора","oblast":"SZR"}
+{"nameoblast":"Търговище","oblast":"TGV"}
+{"nameoblast":"Хасково","oblast":"HKV"}
+{"nameoblast":"Шумен","oblast":"SHU"}
+{"nameoblast":"Ямбол","oblast":"JAM"}

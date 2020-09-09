@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <svg width="1000" height="1000" id="playground">
+        <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+    </svg>
+</body>
+<script>
+    const toRad = (deg) => (deg * (Math.PI / 180));
+
+    function sound(src) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.setAttribute("muted", "muted");
+        this.sound.style.display = "none";
+        document.body.appendChild(this.sound);
+        this.play = function () {
+            this.sound.play();
+        }
+        this.stop = function () {
+            this.sound.pause();
+        }
+        this.setTime = () => {
+            this.sound.currentTime = 0;
+        }
+    }
+
+    const seconds = new sound('ticking.mp3');
+    const hours = new sound('Cuckoo-clock-sound.mp3');
+
+    const Line = ({ x, y, x2, y2 }) => {
+        const line = document.createElement('LINE');
+        line.setAttributeNS(null, 'x1', x);
+        line.setAttributeNS(null, 'y1', y);
+        line.setAttributeNS(null, 'x2', x2);
+        line.setAttributeNS(null, 'y2', y2);
+        line.setAttributeNS(null, 'style', 'stroke:black;stroke-width:2')
+
+        const rotate = (deg) => {
+            const rad = toRad(deg);
+
+            x2 -= x;
+            y2 -= y;
+
+            const rotateX = x2 * Math.cos(rad) - y2 * Math.sin(rad) + x;
+            const rotateY = x2 * Math.sin(rad) + y2 * Math.cos(rad) + y;
+
+            return Line({ x, y, x2: rotateX, y2: rotateY });
+        }
+
+        return { body: line, coordinates: { x, y, x2, y2 }, rotate };
+    }
+
+    const Circle = ({ x, y, r = 1 }) => {
+        const circle = document.createElement('CIRCLE');
+        circle.setAttributeNS(null, 'cx', x);
+        circle.setAttributeNS(null, 'cy', y);
+        circle.setAttributeNS(null, 'r', r);
+        circle.setAttributeNS(null, 'style', 'fill:none; stroke: black; stroke-width: 1px;');
+
+        return { body: circle, coordinates: { x, y, r } };
+    }
+
+    const Plain = ({ svg }) => {
+        let elements = [];
+
+        const update = () => {
+            svg.innerHTML = elements.map(element => element.body.outerHTML).join('\n');
+        };
+
+        const add = (element) => {
+            elements.push(element);
+            update();
+        };
+
+        const remove = (element) => {
+            const index = elements.indexOf(element);
+            if (index !== -1) {
+                elements.splice(index, 1);
+            }
+        }
+
+        const splice = (startIndex, toRemove) => {
+            let arr = elements.splice(startIndex, toRemove);
+            update();
+            return arr;
+        }
+
+        return {
+            elements,
+            update,
+            add,
+            remove,
+            splice,
+            length
+        }
+    }
+
+    const playground = Plain({ svg: document.getElementById('playground') });
+    const squareSide = 150;
+    const centerXY = squareSide;
+    const clockRadius = squareSide;
+    const clockCenter = Circle({ x: centerXY, y: centerXY });
+    playground.add(clockCenter)
+
+
+    const rotate = ({ x, y, deg }) => {
+        const rad = toRad(deg);
+        // console.log(rad)
+        x -= clockCenter.coordinates.x;
+        y -= clockCenter.coordinates.y;
+        const rotateX = x * Math.cos(rad) - y * Math.sin(rad) + clockCenter.coordinates.x;
+        const rotateY = x * Math.sin(rad) + y * Math.cos(rad) + clockCenter.coordinates.y;
+
+        return { x: Math.round(rotateX, 3), y: Math.round(rotateY, 3) };
+    }
+
+    const drawClock = () => {
+        const dots = Math.PI * centerXY;
+        const deg = 360 / dots;
+
+        for (let i = 0; i < dots; i++) {
+            let { x, y } = clockCenter.coordinates;
+
+            const dot = Circle(rotate({ x: x + centerXY, y, deg: i * deg }));
+
+            playground.add(dot);
+        }
+
+        for (let i = 0; i < 12; i++) {
+            let { x, y } = clockCenter.coordinates;
+
+            const dot = Circle(rotate({ x: x + centerXY * 0.90, y, deg: i * 30 }));
+
+            playground.add(dot);
+        }
+    }
+
+    const drawLine = ({ x, y }, off = 0) => {
+        const len = Math.sqrt((x - centerXY) * (x - centerXY) + (y - centerXY) * (y - centerXY)) / 5;
+        const deltaX = x - centerXY;
+        const deltaY = y - centerXY;
+
+        let i = 1, j = 0,
+            nX = (i / len) * deltaX + centerXY,
+            nY = (i / len) * deltaY + centerXY,
+            nLen = (Math.pow(nX - centerXY, 2) + Math.pow(nY - centerXY, 2)),
+            startIndex = playground.elements.length;
+
+        while (Math.round(nLen, 2) < Math.round(Math.pow(centerXY - ((off / 100) * centerXY), 2), 2)) {
+            let dot = Circle({ x: nX, y: nY });
+            playground.add(dot);
+            i++;
+            nX = (i / len) * deltaX + centerXY;
+            nY = (i / len) * deltaY + centerXY;
+            nLen = (Math.pow(nX - centerXY, 2) + Math.pow(nY - centerXY, 2));
+        }
+
+        return { startIndex, i };
+    }
+
+    const drawCiferBlat = async () => {
+        return new Promise((res, rej) => {
+            const x = centerXY;
+            const y = 0;
+
+            const degSec = 360 / 60;
+            const degMin = 360 / (60 * 60);
+            const degHours = 360 / (60 * 60 * 12);
+
+            const today = new Date();
+            const sec = today.getSeconds();
+            const min = today.getMinutes();
+            const hour = today.getHours();
+
+            // console.log(hour, min, sec);
+
+            const secObj = drawLine(rotate({ x, y, deg: degSec * sec }), 20);
+            const minObj = drawLine(rotate({ x, y, deg: degMin * (min * 60 + sec) }), 50);
+            const hourObj = drawLine(rotate({ x, y, deg: degHours * (hour * 60 * 60 + min * 60 + sec) }), 65);
+            if (sec === 0 && min === 0) {
+                hours.play();
+            } else if (sec > 3) {
+                seconds.play();
+            }
+
+            setTimeout(() => {
+                if (sec === 4) {
+                    hours.stop();
+                    hours.setTime(0);
+                }
+                seconds.stop();
+                seconds.setTime(0);
+                res({ startIndex: secObj.startIndex, count: secObj.i + minObj.i + hourObj.i });
+            }, 1000);
+        });
+    }
+
+    (async () => {
+        drawClock();
+        console.log('Clock loaded');
+
+        for (let i = 0; i > -1; i++) {
+            const { startIndex, count } = await drawCiferBlat();
+            playground.splice(startIndex, count);
+        }
+
+        console.log('Line loaded');
+    })();
+
+
+    // setInterval(() => {
+    //     const time = new Date();
+    //     const m = time.getMinutes();
+    //     const min = Line({ ...clockCenter.coordinates, x2: 50, y2: 0 }).rotate(m * 6);
+    //     playground.add(min);
+
+    //     setTimeout(() => {
+    //         playground.remove(min);
+    //     }, 1000)
+    // }, 1000)
+
+</script>
+
+</html>

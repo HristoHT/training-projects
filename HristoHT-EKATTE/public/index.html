@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/loader.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <label for="search"></label>
+        <input type="text" id="search">
+        <button id="go">Go</button>
+        <label for="fo" id="totals"></label>
+    </div>
+    <div>
+        <label id="tableInfo"></label>
+    </div>
+    <table style="width: 100%;height: 90%;">
+        <tr>
+            <td>EKATTE</td>
+            <td>Град</td>
+            <td>Община</td>
+            <td>Област</td>
+        </tr>
+        <tbody id="table_body" style="overflow-y: auto;">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    const table_body = document.querySelector('#table_body');
+    const total = document.querySelector('#totals');
+
+    const createTr = (data) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${data.ekatte}</td><td>${data.name}</td><td>${data.nameobstina}</td><td>${data.nameoblast}</td>`;
+        return row;     
+    };
+
+    const visualizeData = async (data, tm = 100) => {
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                data.map(row => table_body.appendChild(createTr(row)));
+                res();
+            }, tm);
+        })
+    }
+
+    const loadAsync = async (data, count = 2000, tm = 0) => {
+        const courses = Math.ceil(data / count);
+
+        for (let i = 0; i <= count; i++) {
+            await visualizeData(data.slice(i * count, (i + 1) * count), tm);
+        }
+    }
+
+    document.querySelector('#go').onclick = (e) => {
+        e.target.setAttribute('disabled', 'disabled');
+        total.innerHTML = `<div id="escapingBallG"> <div id="escapingBall_1" class="escapingBallG"></div></div>`
+        const search = document.querySelector('#search').value.trim();
+        document.querySelector('#search').value = '';
+
+        fetch(`/search?search=${search}`)
+            .then(res => res.json())
+            .then(async res => {
+                console.log(res)
+                const data = res.searchResult;
+                document.querySelector('#tableInfo').innerHTML = `
+                    Резултатите в база <b>oblasti</b> са <b>${res.obl}</b> <br/>
+                    Резултатите в база <b>obstini</b> са <b>${res.obst}</b> <br/>
+                    Резултатите в база <b>gradove</b> са <b>${res.grad}</b> <br/>
+                `;
+                table_body.innerHTML = '';
+                loadAsync(data, 100, 100);
+                total.innerHTML = `<b>${data.length}</b> резултати, съответстващи на <b>"${search}"</b>`;
+                e.target.removeAttribute('disabled');
+            })
+            .catch(err => console.log(err));
+    }
+</script>
+
+</html>

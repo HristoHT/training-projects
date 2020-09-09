@@ -1,0 +1,28 @@
+{"name":"Благоевград","oblast":"BLG"}
+{"name":"Бургас","oblast":"BGS"}
+{"name":"Варна","oblast":"VAR"}
+{"name":"Велико Търново","oblast":"VTR"}
+{"name":"Видин","oblast":"VID"}
+{"name":"Враца","oblast":"VRC"}
+{"name":"Габрово","oblast":"GAB"}
+{"name":"Добрич","oblast":"DOB"}
+{"name":"Кърджали","oblast":"KRZ"}
+{"name":"Кюстендил","oblast":"KNL"}
+{"name":"Ловеч","oblast":"LOV"}
+{"name":"Монтана","oblast":"MON"}
+{"name":"Пазарджик","oblast":"PAZ"}
+{"name":"Перник","oblast":"PER"}
+{"name":"Плевен","oblast":"PVN"}
+{"name":"Пловдив","oblast":"PDV"}
+{"name":"Разград","oblast":"RAZ"}
+{"name":"Русе","oblast":"RSE"}
+{"name":"Силистра","oblast":"SLS"}
+{"name":"Сливен","oblast":"SLV"}
+{"name":"Смолян","oblast":"SML"}
+{"name":"София","oblast":"SFO"}
+{"name":"София (столица)","oblast":"SOF"}
+{"name":"Стара Загора","oblast":"SZR"}
+{"name":"Търговище","oblast":"TGV"}
+{"name":"Хасково","oblast":"HKV"}
+{"name":"Шумен","oblast":"SHU"}
+{"name":"Ямбол","oblast":"JAM"}
