@@ -9,7 +9,6 @@
 
 <body>
     <svg width="1000" height="1000" id="playground">
-        <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
     </svg>
 </body>
 <script>
@@ -60,21 +59,31 @@
         return { body: line, coordinates: { x, y, x2, y2 }, rotate };
     }
 
-    const Circle = ({ x, y, r = 1 }) => {
+    function Circle({ x, y, r = 1 }) {
         const circle = document.createElement('CIRCLE');
         circle.setAttributeNS(null, 'cx', x);
         circle.setAttributeNS(null, 'cy', y);
         circle.setAttributeNS(null, 'r', r);
         circle.setAttributeNS(null, 'style', 'fill:none; stroke: black; stroke-width: 1px;');
-
-        return { body: circle, coordinates: { x, y, r } };
+        this.body = circle.outerHTML;
+        this.coordinates = { x, y, r };
     }
 
     const Plain = ({ svg }) => {
         let elements = [];
 
         const update = () => {
-            svg.innerHTML = elements.map(element => element.body.outerHTML).join('\n');
+            try {
+                // console.log(elements.map(element => element.body));
+                for (let i = 0; i < elements.length; i++) {
+                    if (elements[i] == undefined) {
+                        throw new Error(`${i}-th element is udefined`);
+                    }
+                }
+                svg.innerHTML = elements.map(element => element.body).join('\n');
+            } catch (e) {
+                console.log(e);
+            }
         };
 
         const add = (element) => {
@@ -82,11 +91,28 @@
             update();
         };
 
+        const bulkAdd = (manyElements) => {
+            elements = [...elements, ...manyElements];
+            update();
+        }
+
         const remove = (element) => {
             const index = elements.indexOf(element);
             if (index !== -1) {
                 elements.splice(index, 1);
             }
+        }
+
+        const bulkRemove = (manyElements) => {
+            manyElements.forEach(dot => {
+                const index = elements.indexOf(dot);
+
+                if (index !== -1) {
+                    elements.splice(index, 1);
+                }
+            });
+
+            update();
         }
 
         const splice = (startIndex, toRemove) => {
@@ -100,16 +126,18 @@
             update,
             add,
             remove,
+            bulkRemove,
+            bulkAdd,
             splice,
             length
         }
     }
 
     const playground = Plain({ svg: document.getElementById('playground') });
-    const squareSide = 150;
+    const squareSide = 500;
     const centerXY = squareSide;
     const clockRadius = squareSide;
-    const clockCenter = Circle({ x: centerXY, y: centerXY });
+    const clockCenter = new Circle({ x: centerXY, y: centerXY });
     playground.add(clockCenter)
 
 
@@ -125,24 +153,25 @@
     }
 
     const drawClock = () => {
-        const dots = Math.PI * centerXY;
+        const dots = Math.PI * centerXY / 5;
         const deg = 360 / dots;
+        let toAdd = [];
 
         for (let i = 0; i < dots; i++) {
             let { x, y } = clockCenter.coordinates;
 
-            const dot = Circle(rotate({ x: x + centerXY, y, deg: i * deg }));
+            toAdd.push(new Circle(rotate({ x: x + centerXY, y, deg: i * deg })));
 
-            playground.add(dot);
         }
 
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 60; i++) {
             let { x, y } = clockCenter.coordinates;
 
-            const dot = Circle(rotate({ x: x + centerXY * 0.90, y, deg: i * 30 }));
+            toAdd.push(new Circle(rotate({ x: x + centerXY * 0.90, y, deg: i * (360 / 60) })));
 
-            playground.add(dot);
         }
+
+        playground.bulkAdd(toAdd);
     }
 
     const drawLine = ({ x, y }, off = 0) => {
@@ -154,20 +183,20 @@
             nX = (i / len) * deltaX + centerXY,
             nY = (i / len) * deltaY + centerXY,
             nLen = (Math.pow(nX - centerXY, 2) + Math.pow(nY - centerXY, 2)),
-            startIndex = playground.elements.length;
+            startIndex = playground.elements.length, toAdd = [];
 
         while (Math.round(nLen, 2) < Math.round(Math.pow(centerXY - ((off / 100) * centerXY), 2), 2)) {
-            let dot = Circle({ x: nX, y: nY });
-            playground.add(dot);
+            toAdd.push(new Circle({ x: nX, y: nY }));
             i++;
             nX = (i / len) * deltaX + centerXY;
             nY = (i / len) * deltaY + centerXY;
             nLen = (Math.pow(nX - centerXY, 2) + Math.pow(nY - centerXY, 2));
         }
 
-        return { startIndex, i };
+        playground.bulkAdd(toAdd);
+        return toAdd;
     }
-
+    var lastSec = 0;
     const drawCiferBlat = async () => {
         return new Promise((res, rej) => {
             const x = centerXY;
@@ -182,16 +211,17 @@
             const min = today.getMinutes();
             const hour = today.getHours();
 
-            // console.log(hour, min, sec);
-
+            console.log(sec);
             const secObj = drawLine(rotate({ x, y, deg: degSec * sec }), 20);
             const minObj = drawLine(rotate({ x, y, deg: degMin * (min * 60 + sec) }), 50);
             const hourObj = drawLine(rotate({ x, y, deg: degHours * (hour * 60 * 60 + min * 60 + sec) }), 65);
-            if (sec === 0 && min === 0) {
+
+            if (sec === 0 ) {
                 hours.play();
-            } else if (sec > 3) {
+            } else if (sec > 3 && lastSec !== sec) {
                 seconds.play();
             }
+            lastSec = sec;
 
             setTimeout(() => {
                 if (sec === 4) {
@@ -200,8 +230,12 @@
                 }
                 seconds.stop();
                 seconds.setTime(0);
-                res({ startIndex: secObj.startIndex, count: secObj.i + minObj.i + hourObj.i });
-            }, 1000);
+                playground.bulkRemove(secObj);
+                playground.bulkRemove(minObj);
+                playground.bulkRemove(hourObj);
+
+                res();
+            }, 200);
         });
     }
 
@@ -210,8 +244,8 @@
         console.log('Clock loaded');
 
         for (let i = 0; i > -1; i++) {
-            const { startIndex, count } = await drawCiferBlat();
-            playground.splice(startIndex, count);
+            await drawCiferBlat();
+            // playground.splice(startIndex, count);
         }
 
         console.log('Line loaded');
