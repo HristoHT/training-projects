@@ -10,7 +10,7 @@ import AddItem from '../Components/ProuctPanel/ItemDialog';
 import ProductPanel from "../Views/ProductPanel/ProductPanel";
 import Catalog from '../Views/Catalog/Catalog';
 // import ItemInfo from '../views/ItemInfo';
-// import Cart from '../views/Cart';
+import Cart from '../Views/Cart/Cart';
 // import Purchases from '../views/Purchases';
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -75,10 +75,11 @@ const pages = {
         component: (props) => (<div {...props} />)
     }, cart: {
         path: '/cart',
-        permission: ['user'],
+        permission: [],
+        admin: false,
         exact: true,
         private: true,
-        component: (props) => (<div {...props} />)
+        component: (props) => (<Cart {...props} />)
     }, iteminfo: {
         path: '/iteminfo/:id',
         permission: ['admin', 'user'],
@@ -185,9 +186,9 @@ export const FormButtons = (Button) => {
             {Object.keys(pagesButtons)
                 .filter(key => {
                     let f1 = pagesButtons[key].position === 'right';
-                    let f2 = pages[key].permission.indexOf(user.role) === -1 ? false : true;
+                    // let f2 = pages[key].permission.indexOf(user.role) === -1 ? false : true;
 
-                    return f1 && (f2 || (user.admin && pages[key].admin));
+                    return f1; /* && ( *//* f2 || *//*  (user.admin && pages[key].admin)) */;
                 })
                 .map(key => (
                     <Grid item>

@@ -71,7 +71,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
     const setProduct = product => dispatch(setProductAction(product));
     const setProductField = (field, value) => dispatch(setProductFieldAction({ field, value }));
     const setProducts = (products) => dispatch(setProductsAction(products));
-    const product = useSelector(state => state.product)
+    const product = useSelector(state => state.product);
 
     const loadImage = (e) => {
         if (e.target.files && e.target.files[0]) {
@@ -96,7 +96,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
 
     const handleAdd = () => {
         if (!update) {
-            api.request('POST', 'products', { body: { ...product } })()
+            api.request('POST', 'productsAdmin', { body: { ...product } })()
                 .then(res => {
                     enqueueSnackbar('Успешно добавено', { variant: "success" });
                     setProduct({ ...defaultState });
@@ -107,7 +107,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
                     enqueueSnackbar(err.message, { variant: "error" });
                 });
         } else {
-            api.request('PUT', 'products', { body: { ...product }, param: `/${id}` })()
+            api.request('PUT', 'productsAdmin', { body: { ...product }, param: `/${id}` })()
                 .then(res => {
                     enqueueSnackbar('Успешно променен', { variant: "success" });
                     setProduct({ ...defaultState });
@@ -121,10 +121,13 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
     }
 
     useEffect(() => {
+        console.log('IN')
         if (!update) {
+            console.log('IN1')
             setProduct({ ...defaultState });
         } else {
-            api.request('GET', 'products', { param: `/${id}` })()
+            console.log('IN2')
+            api.request('GET', 'productsAdmin', { param: `/${id}` })()
                 .then(data => {
                     console.log(data);
                     setProduct({ ...data });
@@ -133,7 +136,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
                     console.log(err);
                 })
         }
-    }, [id])
+    }, [id]);
 
     return <Dialog
         open={open}

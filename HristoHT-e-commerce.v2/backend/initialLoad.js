@@ -6,6 +6,8 @@ const initialLoad = async actions => {
         const usersFlag = await actions.checkIfTableExist(tablesNames.users);
         const tokensFlag = await actions.checkIfTableExist(tablesNames.tokens);
         const adminFlag = await actions.checkIfTableExist(tablesNames.admins);
+        const cartsFlag = await actions.checkIfTableExist(tablesNames.carts);
+        const cart_detailsFlag = await actions.checkIfTableExist(tablesNames.cart_details);
 
         if (!usersFlag) {
             await actions.createTable(tablesNames.users, {
@@ -53,10 +55,31 @@ const initialLoad = async actions => {
             });
         }
 
-        if(!tokensFlag){
+        if (!tokensFlag) {
             await actions.createTable(tablesNames.tokens, {
                 id: 'BIGSERIAL PRIMARY KEY',
                 token: `TEXT NOT NULL`,
+            });
+        }
+
+        if (!cartsFlag) {
+            await actions.createTable(tablesNames.carts, {
+                id: 'BIGSERIAL PRIMARY KEY',
+                price: 'FLOAT(2)',
+                user_id: `BIGSERIAL REFERENCES ${tablesNames.users}(id)`,
+                modified: 'TEXT NOT NULL',
+            });
+        }
+
+        if (!cart_detailsFlag) {
+            await actions.createTable(tablesNames.cart_details, {
+                id: 'BIGSERIAL PRIMARY KEY',
+                modified: 'TEXT NOT NULL',
+                cart_id: `BIGSERIAL REFERENCES ${tablesNames.carts}(id)`,
+                product_id: `BIGSERIAL REFERENCES ${tablesNames.products}(id)`,
+                measure_id: `BIGSERIAL REFERENCES ${tablesNames.measures}(id)`,
+                quantity: 'FLOAT(3)',
+                price: 'FLOAT(2)'
             });
         }
 
@@ -75,7 +98,9 @@ const tablesNames = {
     products_measures: 'products_measures',
     users: 'users',
     tokens: 'tokens',
-    admins:'admins'
+    admins: 'admins',
+    carts: 'carts',
+    cart_details: 'cart_details'
 }
 
 const tablesSchemas = {
@@ -102,11 +127,24 @@ const tablesSchemas = {
         name: { type: 'string' },
         description: { type: 'string' },
         image: { type: 'string' },
-        visable: {type: 'bolean'}
+        visable: { type: 'bolean' }
     },
     products_measures: {
         product_id: { type: 'id' },
         measure_id: { type: 'id' },
+    },
+    carts: {
+        price: { type: 'number-2' },
+        user_id: { type: 'id' },
+        modified: { type: 'string' },
+    },
+    cart_details: {
+        modified: { type: 'string' },
+        cart_id: { type: 'id' },
+        product_id: { type: 'id' },
+        measure_id: { type: 'id' },
+        quantity: { type: 'number-3' },
+        price: { type: 'number-2' }
     }
 }
 

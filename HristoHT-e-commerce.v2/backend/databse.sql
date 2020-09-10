@@ -56,7 +56,7 @@ CREATE TABLE cart_details (
     product_id BIGSERIAL REFERENCES products(product_id),
     measure_id BIGSERIAL REFERENCES measures(measure_id),
     quantity FLOAT(3),
-    price: FLOAT(3)
+    price FLOAT(3)
 );
 CREATE TABLE orders (
     id BIGSERIAL PRIMARY KEY,

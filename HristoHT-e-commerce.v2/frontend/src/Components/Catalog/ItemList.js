@@ -2,22 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Alert from '@material-ui/lab/Alert';
 
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import CreateIcon from '@material-ui/icons/Create';
-import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -26,13 +11,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ItemDialog from "../../Components/ProuctPanel/ItemDialog";
-
+import GreenButton from "../Utils/GreenButton";
 import { formatNumber } from "../../Utils/NumberFormat";
 import { useSelector, useDispatch } from 'react-redux';
 import { setProductsAction } from "../../Utils/store/actions";
 import { useSnackbar } from 'notistack';
-
+import AddIcon from '@material-ui/icons/Add';
 import api from '../../Utils/api';
+import Loader from "../Utils/Loader";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,6 +45,24 @@ const Row = ({ row }) => {
     const dispatch = useDispatch();
     const setProducts = products => dispatch(setProductsAction(products));
     const { enqueueSnackbar } = useSnackbar();
+    const user = useSelector(state => state.user);
+
+    const addToCart = (product_id, measure_id) => (e) => {
+        api.request('PUT', 'carts', {
+            body: {
+                user_id: user.id,
+                product_id,
+                measure_id,
+                quantity: 1
+            }
+        })()
+            .then(data => {
+                enqueueSnackbar('Продуктът е добавена', { variant: "success" });
+            })
+            .catch(err => {
+                enqueueSnackbar('Неуспешно добавяне на продукта', { variant: "error" });
+            });
+    }
 
     return <TableRow key={row.id}>
         <TableCell className={classes.image}>
@@ -68,8 +72,27 @@ const Row = ({ row }) => {
             {row.name}
         </TableCell>
         <TableCell>{row.description}</TableCell>
-        <TableCell align="right">
-
+        <TableCell >
+            <Grid container justify="flex-end" spacing={2} alignItems="center">
+                <Grid item>
+                    <Typography align="left">
+                        {row.measure_name}
+                    </Typography>
+                </Grid>
+                <Grid item xs container direction="column" alignItems="center">
+                    <Grid item xs>{formatNumber(row.price, 2)} лв.</Grid>
+                    <Grid item xs>{formatNumber(row.quantity, 3)} бр.</Grid>
+                </Grid>
+            </Grid>
+        </TableCell>
+        <TableCell>
+            <Grid container justify="flex-end" spacing={2} alignItems="center">
+                <Grid item>
+                    <GreenButton startIcon={<AddIcon />} onClick={addToCart(row.product_id, row.measure_id)}>
+                        Добави
+                    </GreenButton>
+                </Grid>
+            </Grid>
         </TableCell>
         {open && <ItemDialog setOpen={setOpen} open={open} id={row.id} update />}
     </TableRow>
@@ -81,12 +104,14 @@ const ItemList = ({ goTo, ...props }) => {
     const products = useSelector(state => state.products);
     const dispatch = useDispatch();
     const setProducts = products => dispatch(setProductsAction(products));
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        setLoading(true);
         api.request('GET', 'products', { queries: { visable: true } })()
             .then(data => {
                 setProducts(data);
-                console.log(data)
+                setLoading(false);
             })
             .catch(err => {
                 console.log(err);
@@ -94,17 +119,30 @@ const ItemList = ({ goTo, ...props }) => {
     }, [])
 
     return <Grid item xs={12} container justify="space-between">
-        <Grid item xs ={12}>
+        <Grid item xs={12}>
             <Typography variant="h6" align="center">Продукти</Typography>
         </Grid>
         <Grid item xs={12}>
-            <TableContainer className={classes.table}>
+            {!loading && <TableContainer className={classes.table}>
                 <Table size="small">
                     <TableHead>
                         <TableRow>
                             <TableCell>Снимка</TableCell>
                             <TableCell>Име</TableCell>
                             <TableCell>Описание</TableCell>
+                            <TableCell>
+                                <Grid container justify="flex-end" spacing={2} alignItems="center">
+                                    <Grid item >
+                                        <Typography align="left">
+                                            Разфасовка
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs container direction="column" alignItems="center">
+                                        <Grid item>Количество</Grid>
+                                        <Grid item>Цена</Grid>
+                                    </Grid>
+                                </Grid>
+                            </TableCell>
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
@@ -112,7 +150,14 @@ const ItemList = ({ goTo, ...props }) => {
                         {products.map((row) => <Row row={row} />)}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            </TableContainer>}
+            {loading && <Grid container justify="center">
+                <Grid item xs container direction="column" alignItems="center">
+                    <Grid item>
+                        <Loader />
+                    </Grid>
+                </Grid>
+            </Grid>}
         </Grid>
     </Grid>
 }

@@ -32,7 +32,9 @@ class API {
     endPoints = {
         measures: '/measures',
         products: '/products',
-        auth: '/auth'
+        productsAdmin: '/products/admin',
+        auth: '/auth',
+        carts: '/carts'
     }
     //Ако е запазен accessToken-а в локалната памет го взема
     constructor() {

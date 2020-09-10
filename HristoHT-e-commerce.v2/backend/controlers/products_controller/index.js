@@ -1,6 +1,7 @@
 const productObject = require('./productObject');
 const { tablesNames, tablesSchemas } = require('../../initialLoad');
 const CustomError = require('../../utils/CustomError');
+const { format } = require('../../utils/formatValue');
 
 /**
  * Products controller
@@ -21,7 +22,7 @@ const controller = (actions) => {
             try {
                 const add = await actions.insertInTable(tablesNames.products, tablesSchemas.products, [product], true)
 
-                const result = await get({ name: product.name });
+                const result = await getAdmin({ name: product.name });
                 const product_id = result[0].id;
 
                 await actions.insertInTable(
@@ -32,33 +33,95 @@ const controller = (actions) => {
                 );
 
             } catch (e) {
+                console.log(e);
                 throw new CustomError(409, 'Продукт с това име вече съществува');
             }
 
 
-            return await get();
+            return await getAdmin();
         } catch (e) {
             console.log(e);
             throw e;
         }
     }
 
-    const get = async ({ id = false, name = false, measures = false, visable = false } = {}) => {
+    const get = async ({ id = false, name = false, visable = false, measuresList = false, search = false, priceFrom = false, priceTo = false } = {}) => {
         try {
             let conditions = [], preds = [];
 
-            
-            if (measures) {
-                conditions.push(`INNER JOIN ${tablesNames.products_measures} ON product_id = ${tablesNames.products}.id`);
-                conditions.push(`INNER JOIN ${tablesNames.measures} ON measure_id = ${tablesNames.measures}.id`);
-            }
+            conditions.push(`INNER JOIN ${tablesNames.products_measures} ON product_id = ${tablesNames.products}.id`);
+            conditions.push(`INNER JOIN ${tablesNames.measures} ON measure_id = ${tablesNames.measures}.id`);
 
-            if (id || name || visable) {
+            if (id || name || visable || measuresList || search || priceFrom || priceTo) {
                 conditions.push('WHERE');
             }
 
-            if(visable){
+            if (visable) {
                 preds.push(`visable = ${visable}`);
+            }
+
+            if (id) {
+                preds.push(`id = ${id}`);
+            }
+
+            if (search) {
+                preds.push(`( ${tablesNames.products}.name ~* ${format(search, { type: 'string' })} OR description ~* ${format(search, { type: 'string' })})`)
+            }
+
+            if (priceTo) {
+                preds.push(`price <= ${format(priceTo, { type: 'number' })}`);
+            }
+
+            if (priceFrom) {
+                preds.push(`price >= ${format(priceFrom, { type: 'number' })}`);
+            }
+
+            if (name) {
+                preds.push(`name = '${name}'`);
+            }
+
+            if (measuresList) {
+                preds.push('('
+                    + measuresList.split(',').map(measure_id => `measure_id = ${measure_id}`).join(' OR ') +
+                    ')');
+            }
+
+            conditions.push(preds.join(' AND '));
+            // conditions.push('ORDER BY name');
+            const result = await actions.selectFromTable(tablesNames.products, ['*',
+                `${tablesNames.products}.name AS name`,
+                `${tablesNames.measures}.name AS measure_name`], conditions);
+            // console.log(result)
+            return result;
+        } catch (e) {
+            console.log(e)
+            throw e;
+        }
+    }
+
+    const getMaxPrice = async () => {
+        try {
+            let conditions = [];
+
+            conditions.push(`INNER JOIN ${tablesNames.products_measures} ON product_id = ${tablesNames.products}.id`);
+            conditions.push(`INNER JOIN ${tablesNames.measures} ON measure_id = ${tablesNames.measures}.id`);
+
+            const maxPrice = await actions.selectFromTable(tablesNames.products, ['MAX(price)'], conditions);
+
+            return { maxPrice: maxPrice[0].max };
+        } catch (e) {
+            console.log(e)
+            throw e;
+        }
+    }
+
+
+    const getAdmin = async ({ id = false, name = false } = {}) => {
+        try {
+            let conditions = [], preds = [];
+
+            if (id || name) {
+                conditions.push('WHERE');
             }
 
             if (id) {
@@ -70,11 +133,11 @@ const controller = (actions) => {
             }
 
             conditions.push(preds.join(' AND '));
-            conditions.push('ORDER BY name');
-
             const result = await actions.selectFromTable(tablesNames.products, ['*'], conditions);
+            // console.log(result)
             return result;
         } catch (e) {
+            console.log(e)
             throw e;
         }
     }
@@ -109,7 +172,7 @@ const controller = (actions) => {
                 throw new CustomError(409, 'Продукт с това име вече съществува');
             }
 
-            return await get();
+            return await getAdmin();
         } catch (e) {
             throw e;
         }
@@ -125,7 +188,7 @@ const controller = (actions) => {
                         values[column] = obj[column];
                     }
                 }
-                
+
                 await actions.updateTable(tablesNames.products, newChema, values, [`WHERE id = ${id}`]);
 
             } catch (e) {
@@ -133,7 +196,7 @@ const controller = (actions) => {
                 throw new CustomError(409, 'Продукт с това име вече съществува');
             }
 
-            const result = await get({ id });
+            const result = await getAdmin({ id });
             // console.log(result);
             return await result[0];
         } catch (e) {
@@ -146,7 +209,7 @@ const controller = (actions) => {
             await actions.deleteFromTable(tablesNames.products_measures, [`WHERE product_id=${id}`]);
             const result = await actions.deleteFromTable(tablesNames.products, [`WHERE id = ${id}`]);
 
-            return await get();
+            return await getAdmin();
         } catch (e) {
             throw e;
         }
@@ -158,7 +221,9 @@ const controller = (actions) => {
         remove,
         getProductById,
         update,
-        updateOne
+        updateOne,
+        getAdmin,
+        getMaxPrice
     });
 }
 

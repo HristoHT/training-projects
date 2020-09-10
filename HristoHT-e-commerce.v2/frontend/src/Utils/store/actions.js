@@ -7,7 +7,9 @@ const actions = {
 
     SET_PRODUCT: 'SET_PRODUCT',
     SET_PRODUCT_FIELD: 'SET_PRODUCT_FIELD',
-    UPDATE_PRODUCT: 'UPDATE_PRODUCT'
+    UPDATE_PRODUCT: 'UPDATE_PRODUCT',
+
+    SET_MAX_PRICE: 'SET_MAX_PRICE'
 }
 
 export default actions;

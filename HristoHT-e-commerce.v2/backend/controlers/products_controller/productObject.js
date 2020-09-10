@@ -14,6 +14,7 @@ const productObject = ({
     // tags = ValidationError('Нужен е поне един таг'),
     measures = ValidationError('Нужен е поне едина разфасовка'),
     description = requiredParam('описание'),
+    visable = false,
     image = null,
 }) => {
     // console.log('name=', product_name.length)
@@ -34,7 +35,7 @@ const productObject = ({
             name,
             description,
             image,
-            visable:false
+            visable
         }),
         
         measures: Object.freeze([

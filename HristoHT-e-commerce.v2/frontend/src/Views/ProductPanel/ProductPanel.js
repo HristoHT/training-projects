@@ -62,13 +62,17 @@ const Row = ({ row }) => {
     const updateProduct = product => dispatch(updateProductAction(product));
     const { enqueueSnackbar } = useSnackbar();
     const [visable, setVisable] = useState(false);
-    const [confirmDelete, setConfirmDelete] = useState(false)
+    const [del, setDel] = useState(false)
     const openUpdateProduct = () => {
         setOpen(true);
     }
 
+    const openDel = () => {
+        setDel(true);
+    }
+
     const updateVisability = (id) => () => {
-        api.request('PATCH', 'products', { param: `/${id}`, body: { visable: !visable } })()
+        api.request('PATCH', 'productsAdmin', { param: `/${id}`, body: { visable: !visable } })()
             .then(data => {
                 enqueueSnackbar(visable ? 'Продуктът е скрит от каталога' : 'Продуктът се въжда в каталога', { variant: "success" });
                 // setProducts(data);
@@ -84,8 +88,8 @@ const Row = ({ row }) => {
         setVisable(row.visable);
     }, [row]);
 
-    const deleteMeasure = (id) => (e) => {
-        api.request('DELETE', 'products', { param: `/${id}` })()
+    const deleteProduct = (id) => (e) => {
+        api.request('DELETE', 'productsAdmin', { param: `/${id}` })()
             .then(data => {
                 enqueueSnackbar('Продуктът е изтрит', { variant: "success" });
                 setProducts(data);
@@ -113,11 +117,11 @@ const Row = ({ row }) => {
                     <CreateIcon fontSize="small" onClick={openUpdateProduct} />
                 </IconButton>
                 <IconButton size="small">
-                    <DeleteIcon fontSize="small" onClick={() => setConfirmDelete(true)} />
+                    <DeleteIcon fontSize="small" onClick={openDel} />
                 </IconButton>
             </ButtonGroup>
         </TableCell>
-        {confirmDelete && <ConfirmationDialog setOpen={setConfirmDelete} open={confirmDelete} callback={deleteMeasure}/>}
+        {del && <ConfirmationDialog setOpen={setDel} open={del} callback={deleteProduct(row.id)} />}
         {open && <ItemDialog setOpen={setOpen} open={open} id={row.id} update />}
     </TableRow>
 }
@@ -130,7 +134,7 @@ const ProductPanel = ({ goTo, ...props }) => {
     const setProducts = products => dispatch(setProductsAction(products));
 
     useEffect(() => {
-        api.request('GET', 'products')()
+        api.request('GET', 'productsAdmin')()
             .then(data => {
                 setProducts(data);
                 console.log(data)
@@ -138,7 +142,7 @@ const ProductPanel = ({ goTo, ...props }) => {
             .catch(err => {
                 console.log(err);
             })
-    }, [])
+    }, []);
 
     const addMeasure = () => {
         setOpen(true);
