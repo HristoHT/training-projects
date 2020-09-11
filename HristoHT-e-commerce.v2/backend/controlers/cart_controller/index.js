@@ -51,8 +51,8 @@ const controller = (actions) => {
             if (cart && measure.length) {
                 measure = measure[0];
 
-                const price = getNumber(toNumber(measure.price) * toNumber(quantity) + toNumber(cart.price));
-                console.log(toNumber(measure.price), '*', toNumber(quantity), '+', toNumber(cart.price));
+                const price = getNumber(toNumber(measure.price) * toNumber(quantity) * toNumber(measure.quantity) + toNumber(cart.price));
+
                 const modified = (new Date()).getTime()
                 await actions.updateTable(
                     tablesNames.carts,
@@ -77,7 +77,7 @@ const controller = (actions) => {
                         {
                             modified,
                             quantity: newQuantity,
-                            price: getNumber(newQuantity * toNumber(measure.price))
+                            price: getNumber(newQuantity * toNumber(measure.price) * toNumber(measure.quantity))
                         },
                         [`WHERE cart_id = ${cart.id}`]);
                 } else {
@@ -90,7 +90,7 @@ const controller = (actions) => {
                             product_id: product_id,
                             measure_id: measure_id,
                             quantity: toNumber(quantity),
-                            price: getNumber(toNumber(measure.price) * toNumber(quantity))
+                            price: getNumber(toNumber(measure.price) * toNumber(quantity) * toNumber(measure.quantity))
                         }]);
                 }
 
@@ -128,7 +128,7 @@ const controller = (actions) => {
                     throw new Error('Въведете валидно количество');
                 }
 
-                const price = getNumber(toNumber(cart.price) - toNumber(measure.price) * toNumber(quantity), 2);
+                const price = getNumber(toNumber(cart.price) - toNumber(measure.price) * toNumber(quantity) * toNumber(measure.quantity), 2);
                 const modified = (new Date()).getTime()
                 await actions.updateTable(
                     tablesNames.carts,
@@ -146,7 +146,7 @@ const controller = (actions) => {
                     {
                         modified,
                         quantity: newQuantity,
-                        price: getNumber(newQuantity * toNumber(measure.price))
+                        price: getNumber(newQuantity * toNumber(measure.price) * toNumber(measure.quantity))
                     });
 
             } else {
@@ -200,9 +200,73 @@ const controller = (actions) => {
                 [`WHERE id = ${Number(cart_id)}`]
             );
 
-            return getCartDetails(user_id);
+            return await getCartDetails(user_id);
         } catch (e) {
             console.log(e)
+        }
+    }
+
+    const finishCart = async ({ user_id, address }) => {
+        try {
+            const cart = await getCart(user_id);
+            const cart_id = cart.id;
+
+            if (toNumber(cart.price) <= 0) {
+                throw new Error('Изберете прoдукти');
+            } else {
+                const cartDetails = await actions.selectFromTable(
+                    tablesNames.cart_details,
+                    ['*'],
+                    [`WHERE cart_id = ${Number(cart_id)}`]
+                );
+
+                await actions.deleteFromTable(
+                    tablesNames.cart_details,
+                    [`WHERE cart_id = ${Number(cart_id)}`]
+                );
+
+                const orderDetails = cartDetails.map(detail => {
+                    delete detail.modified;
+                    delete detail.cart_id;
+                    return detail;
+                })
+
+                const created = (new Date()).getTime();
+                await actions.insertInTable(
+                    tablesNames.orders,
+                    tablesSchemas.orders,
+                    [
+                        {
+                            price: getNumber(orderDetails.reduce((pred, cur) => pred += toNumber(cur.price), 0)),
+                            user_id,
+                            created,
+                            status: 'finished',
+                            address: 'my home'
+                        }
+                    ]);
+
+                const [order] = await actions.selectFromTable(
+                    tablesNames.orders,
+                    ['*'],
+                    [`WHERE created = '${created}' AND user_id = '${user_id}'`]
+                );
+
+                await actions.insertInTable(
+                    tablesNames.order_details,
+                    tablesSchemas.order_details,
+                    orderDetails.map(details => ({ ...details, order_id: order.id }))
+                );
+
+                await actions.deleteFromTable(
+                    tablesNames.carts,
+                    [`WHERE id = ${Number(cart_id)}`]
+                );
+
+                return await getCartDetails(user_id);
+            }
+        } catch (e) {
+            console.log(e);
+            throw e;
         }
     }
 
@@ -211,7 +275,8 @@ const controller = (actions) => {
         addToCart,
         removeFromCart,
         getCartDetails,
-        clearCart
+        clearCart,
+        finishCart
     });
 }
 

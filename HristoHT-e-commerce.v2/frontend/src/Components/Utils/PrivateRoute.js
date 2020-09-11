@@ -14,7 +14,7 @@ import { changeUserAction } from "../../Utils/store/actions";
  * @param {String} permission permission-ът нужен за достъп до страницата
  * Ако няма токен рендърва логин компонентата, и след успешен логин редиректва към правилния URL 
  */
-const PrivateRoute = ({ path, permission, component, ...props }) => {
+const PrivateRoute = ({ path, permission, component, admin, ...props }) => {
     const user = useSelector(state => state.user);
     const accessToken = api.getAccessToken();
     const dispatch = useDispatch();
@@ -28,7 +28,8 @@ const PrivateRoute = ({ path, permission, component, ...props }) => {
     // window.localStorage.setItem('accessToken', '');
     // window.localStorage.setItem('refreshToken', '');
     // window.localStorage.setItem('user', '{}');
-
+    console.log(api.getAccessToken());
+    console.log(api.getUser());
     if (accessToken !== undefined && accessToken !== null && accessToken !== 'null' && accessToken !== 'undefined') {
         if (!permission.length || (user.role && permission.indexOf(user.role) !== -1)) {
             return <Route path={path} component={component} {...props} />;

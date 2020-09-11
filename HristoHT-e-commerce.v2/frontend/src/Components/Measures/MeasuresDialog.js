@@ -87,10 +87,10 @@ export default function MeasureDialog({ open, setOpen, id, update }) {
                             <TextField fullWidth label="Име" onChange={changeField('name')} defaultValue={measure.name} />
                         </Grid>
                         <Grid item md={4} xs={12}>
-                            <TextField fullWidth label="Количество" onChange={changeField('quantity')} defaultValue={measure.quantity} />
+                            <TextField fullWidth label="Количество (бр.)" onChange={changeField('quantity')} defaultValue={measure.quantity} />
                         </Grid>
                         <Grid item md={4} xs={12}>
-                            <TextField fullWidth label="Ед. цена" onChange={changeField('price')} defaultValue={measure.price} />
+                            <TextField fullWidth label="Ед. цена (лв.)" onChange={changeField('price')} defaultValue={measure.price} />
                         </Grid>
                     </Grid>
                 </DialogContentText>

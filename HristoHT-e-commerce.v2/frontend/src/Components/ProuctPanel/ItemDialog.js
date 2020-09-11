@@ -96,7 +96,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
 
     const handleAdd = () => {
         if (!update) {
-            api.request('POST', 'productsAdmin', { body: { ...product } })()
+            api.request('POST', 'products', { body: { ...product } })()
                 .then(res => {
                     enqueueSnackbar('Успешно добавено', { variant: "success" });
                     setProduct({ ...defaultState });
@@ -107,7 +107,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
                     enqueueSnackbar(err.message, { variant: "error" });
                 });
         } else {
-            api.request('PUT', 'productsAdmin', { body: { ...product }, param: `/${id}` })()
+            api.request('PUT', 'products', { body: { ...product }, param: `/${id}` })()
                 .then(res => {
                     enqueueSnackbar('Успешно променен', { variant: "success" });
                     setProduct({ ...defaultState });
@@ -127,7 +127,7 @@ const ItemDialog = ({ open, setOpen, id, update }) => {
             setProduct({ ...defaultState });
         } else {
             console.log('IN2')
-            api.request('GET', 'productsAdmin', { param: `/${id}` })()
+            api.request('GET', 'products', { param: `/${id}` })()
                 .then(data => {
                     console.log(data);
                     setProduct({ ...data });

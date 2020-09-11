@@ -51,11 +51,10 @@ const Register = ({ ...props }) => {
     }
 
     const handleRegister = async (e) => {
-        console.log(credentials);
         api.register(credentials)
         .then(res => {
             enqueueSnackbar('Вие се регистрирахте успешно', { variant: "success" });
-            history.push('/login');
+            history.push('/user/login');
         })
         .catch(err => enqueueSnackbar(err.message, { variant: "error" }));
     }

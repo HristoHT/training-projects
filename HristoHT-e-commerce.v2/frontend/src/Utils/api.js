@@ -32,59 +32,29 @@ class API {
     endPoints = {
         measures: '/measures',
         products: '/products',
-        productsAdmin: '/products/admin',
         auth: '/auth',
         carts: '/carts'
     }
     //Ако е запазен accessToken-а в локалната памет го взема
     constructor() {
-        this.getRefreshToken();
-        this.getAccessToken();
+        this.getUser();
     }
 
     setUser(user = {}) {
+        const [,endpoint] = window.location.pathname.split('/');
+        console.log('endpoint', endpoint);
         console.log(user);
-        this.user = user;
-        window.localStorage.setItem('user', JSON.stringify(user));
+        window.localStorage.setItem(endpoint, JSON.stringify(user));
     }
 
     getUser() {
-        // window.localStorage.setItem('user', '{}');
-
-        if (!this.user) {
-            this.user = JSON.parse(window.localStorage.getItem('user') || '{}');
-        }
-
-        return this.user;
+        const [,endpoint] = window.location.pathname.split('/');
+        return JSON.parse(window.localStorage.getItem(endpoint) || '{}')
     }
 
-    //Записва accessToken-a в локалната памет
-    setAccessToken(accessToken) {
-        this.accessToken = accessToken;
-        window.localStorage.setItem('accessToken', accessToken);
-    }
-
-    setRefreshToken(refreshToken) {
-        console.log(refreshToken);
-        this.refreshToken = refreshToken;
-        window.localStorage.setItem('refreshToken', refreshToken);
-    }
-
-    //Връща accessToken-a ако има такъв наличен
     getAccessToken() {
-        if (!this.accessToken) {
-            this.accessToken = window.localStorage.getItem('accessToken');
-        }
-
-        return this.accessToken;
-    }
-
-    getRefreshToken() {
-        if (!this.refreshToken) {
-            this.refreshToken = window.localStorage.getItem('refreshToken');
-        }
-
-        return this.refreshToken;
+        const { accessToken } = this.getUser();
+        return accessToken;
     }
 
     /**
@@ -96,18 +66,19 @@ class API {
      */
     async revalidateAccessToken(callback) {
         try {
+            const [,endpoint] = window.location.pathname.split('/');
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token: this.refreshToken })
             };
             console.log('revalidation start');
-            const response = await fetch(`${API_BASE}${this.endPoints.auth}/token`, requestOptions);
+            const response = await fetch(`${API_BASE}/${endpoint}${this.endPoints.auth}/token`, requestOptions);
             console.log(response);
             const result = await response.json();
             console.log('revalidate', result);
             if (response.status < 300) {
-                this.setAccessToken(result.accessToken);
+                this.setUser({ ...this.getUser(), accessToken: result.accessToken })
                 return await callback(false);
             } else {
                 return result;
@@ -125,21 +96,21 @@ class API {
      */
     async login(body, admin = false) {
         try {
+            const [,endpoint] = window.location.pathname.split('/');
+
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
             };
 
-            const response = await fetch(`${API_BASE}${this.endPoints.auth}${admin ? '/admin' : ''}/login`, requestOptions);
+            const response = await fetch(`${API_BASE}/${endpoint}${this.endPoints.auth}/login`, requestOptions);
             console.log(response);
             const result = await response.json();
             console.log(result);
             console.log(response)
             if (response.status >= 200 && response.status < 300) {
-                this.setAccessToken(result.accessToken);
-                this.setRefreshToken(result.refreshToken);
-                this.setUser(result.user);
+                this.setUser(result);
             } else {
                 throw new CustomError(response.status, result.message);
             }
@@ -158,13 +129,14 @@ class API {
     */
     async register(body) {
         try {
+            const [,endpoint] = window.location.pathname.split('/');
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
             };
 
-            const response = await fetch(`${API_BASE}${this.endPoints.auth}/register`, requestOptions);
+            const response = await fetch(`${API_BASE}/${endpoint}${this.endPoints.auth}/register`, requestOptions);
             // console.log(response);
             const result = await response.json();
             console.log(result);
@@ -181,20 +153,21 @@ class API {
 
     async logout() {
         try {
+            const [,endpoint] = window.location.pathname.split('/');
+            const { accessToken } = this.getUser();
             const requestOptions = {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ token: this.accessToken })
+                body: JSON.stringify({ token: accessToken })
             };
 
-            const response = await fetch(`${API_BASE}${this.endPoints.auth}/logout`, requestOptions);
+            const response = await fetch(`${API_BASE}/${endpoint}${this.endPoints.auth}/logout`, requestOptions);
             const result = await response.json();
 
             if (response.status >= 200 && response.status < 300) {
-                this.setAccessToken(null);
-                this.setRefreshToken(null);
+                console.log('Log out')
                 this.setUser();
             }
 
@@ -218,12 +191,14 @@ class API {
         (method, endPoint, { body = {}, queries = {}, param = '' } = { body: {}, queries: {}, param: '' }) =>
             async (checkAccessToken = true) => {
                 try {
+                    const { accessToken } = this.getUser();
+                    const [,endpoint] = window.location.pathname.split('/');
                     //Тялото на заявката
                     let requestOptions = {
                         method,
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${this.accessToken}`,
+                            'Authorization': `Bearer ${accessToken}`,
                         }
                     };
 
@@ -249,8 +224,8 @@ class API {
 
                             return `${key}=${string}`;
                         }).join('&');
-                    console.log('fetch sended', `${API_BASE}${this.endPoints[endPoint]}${param}${query}`)
-                    const response = await fetch(`${API_BASE}${this.endPoints[endPoint]}${param}${query}`, requestOptions);
+                    console.log('fetch sended', `${API_BASE}/${endpoint}${this.endPoints[endPoint]}${param}${query}`)
+                    const response = await fetch(`${API_BASE}/${endpoint}${this.endPoints[endPoint]}${param}${query}`, requestOptions);
                     console.log('response recieved')
                     const result = await response.json();
                     /**

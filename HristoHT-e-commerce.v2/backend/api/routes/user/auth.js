@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HttpError = require('../../utils/HttpError');
+const HttpError = require('../../../utils/HttpError');
 var auth;
 
 router.use((req, res, next) => {
@@ -56,22 +56,5 @@ router.delete('/logout', async (req, res) => {
     }
 });
 
-router.post('/admin/login', async (req, res) => {
-    try {
-        res.send(await auth.loginAdmin(req.body));
-    } catch (e) {
-        console.log(e.stack);
-        return HttpError(e, res);
-    }
-});
-
-router.post('/admin/register', async (req, res) => {
-    try {
-        res.send({ data: await auth.registerAdmin(req.body) })
-    } catch (e) {
-        console.log(e);
-        return HttpError(e, res);
-    }
-});
 
 module.exports = router;

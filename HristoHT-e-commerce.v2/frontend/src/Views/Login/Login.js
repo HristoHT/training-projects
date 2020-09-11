@@ -10,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Alert from '@material-ui/lab/Alert';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
 import api from '../../Utils/api';
@@ -35,9 +35,10 @@ const Login = ({ goTo, admin, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({ name: '', password: '' });
     const history = useHistory();
+    const location = useLocation();
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch();
-    const changeUser = user => dispatch(changeUserAction(user)); 
+    const changeUser = user => dispatch(changeUserAction(user));
 
     const handlePasswordClick = (val) => (e) => {
         setShowPassword(val);
@@ -48,11 +49,12 @@ const Login = ({ goTo, admin, ...props }) => {
     }
 
     const handleLogin = async (e) => {
+        const [, endpoint] = location.pathname.split('/');
         api.login(credentials, admin)
             .then(res => {
                 enqueueSnackbar('Добре дошли', { variant: "success" });
-                history.push(goTo && goTo !== '/login' ? goTo : pages.default.path);
                 changeUser(res.user || {});
+                history.push(goTo && goTo !== `/${endpoint}/login` ? goTo : pages[endpoint].path);
             })
             .catch(err => {
                 enqueueSnackbar(err.message, { variant: "error" });

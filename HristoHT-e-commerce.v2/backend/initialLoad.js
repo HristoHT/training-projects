@@ -8,6 +8,8 @@ const initialLoad = async actions => {
         const adminFlag = await actions.checkIfTableExist(tablesNames.admins);
         const cartsFlag = await actions.checkIfTableExist(tablesNames.carts);
         const cart_detailsFlag = await actions.checkIfTableExist(tablesNames.cart_details);
+        const ordersFlag = await actions.checkIfTableExist(tablesNames.orders);
+        const order_detailsFlag = await actions.checkIfTableExist(tablesNames.order_details);
 
         if (!usersFlag) {
             await actions.createTable(tablesNames.users, {
@@ -15,7 +17,7 @@ const initialLoad = async actions => {
                 name: ' TEXT UNIQUE NOT NULL',
                 password: ' TEXT NOT NULL',
                 email: ' TEXT UNIQUE NOT NULL',
-                addres: ' TEXT',
+                address: ' TEXT',
                 // payment: 'BIGSERIAL REFERENCES payments(payment_id)'
             });
         }
@@ -83,9 +85,33 @@ const initialLoad = async actions => {
             });
         }
 
+        if (!ordersFlag) {
+            await actions.createTable(tablesNames.orders, {
+                id: ` BIGSERIAL PRIMARY KEY`,
+                price: ` FLOAT(2)`,
+                user_id: ` BIGSERIAL REFERENCES ${tablesNames.users}(id)`,
+                // payment: ` BIGSERIAL REFERENCES payments(payment_id)`,
+                // currency: ` BIGSERIAL REFERENCES currencies(currency_id)`,
+                status: ` TEXT NOT NULL`,
+                created: ` TEXT NOT NULL`,
+                address: `TEXT NOT NULL`
+            });
+        }
+
+        if(!order_detailsFlag){
+            await actions.createTable(tablesNames.order_details, {
+                id: `BIGSERIAL PRIMARY KEY`,
+                order_id: `BIGSERIAL REFERENCES ${tablesNames.orders}(id)`,
+                product_id: `BIGSERIAL REFERENCES ${tablesNames.products}(id)`,
+                measure_id: `BIGSERIAL REFERENCES ${tablesNames.measures}(id)`,
+                quantity: `FLOAT(3)`,
+                price: `FLOAT(2)`
+            });
+        }
+
         // await actions.deleteTable(tablesNames.products_measures);
         // await actions.deleteTable(tablesNames.measures);
-        // await actions.deleteTable(tablesNames.products);
+        // await actions.deleteTable(tablesNames.order_details);
         console.log('Tables are waiting data...');
     } catch (e) {
         console.log(e)
@@ -100,7 +126,9 @@ const tablesNames = {
     tokens: 'tokens',
     admins: 'admins',
     carts: 'carts',
-    cart_details: 'cart_details'
+    cart_details: 'cart_details',
+    orders: 'orders',
+    order_details: 'order_details'
 }
 
 const tablesSchemas = {
@@ -111,7 +139,7 @@ const tablesSchemas = {
         name: { type: 'string' },
         password: { type: 'string' },
         email: { type: 'string' },
-        addres: { type: 'string' },
+        address: { type: 'string' },
     },
     admins: {
         name: { type: 'string' },
@@ -145,7 +173,21 @@ const tablesSchemas = {
         measure_id: { type: 'id' },
         quantity: { type: 'number-3' },
         price: { type: 'number-2' }
-    }
+    },
+    orders: {
+        price: { type: 'number-2' },
+        user_id: { type: 'id' },
+        created: { type: 'string' },
+        status: { type: 'string' },
+        address: { type: 'string' },
+    },
+    order_details: {
+        order_id: { type: 'id' },
+        product_id: { type: 'id' },
+        measure_id: { type: 'id' },
+        quantity: { type: 'number-3' },
+        price: { type: 'number-2' }
+    },
 }
 
 module.exports = { initialLoad, tablesSchemas, tablesNames };

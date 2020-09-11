@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HttpError = require('../../utils/HttpError');
+const HttpError = require('../../../utils/HttpError');
 var products;
 
 router.use((req, res, next) => {
@@ -12,35 +12,7 @@ router.use((req, res, next) => {
 router.get('/', async (req, res) => {
     try {
         console.log(req.query);
-        const result = await products.get(req.query);
-        res.send(result);
-    } catch (e) {
-        HttpError(e, res);
-    }
-});
-
-router.get('/maxprice', async (req, res) => {
-    try {
-        const result = await products.getMaxPrice();
-        res.send(result);
-    } catch (e) {
-        HttpError(e, res);
-    }
-});
-
-router.get('/admin/', async (req, res) => {
-    try {
-        console.log(req.query);
         const result = await products.getAdmin(req.query);
-        res.send(result);
-    } catch (e) {
-        HttpError(e, res);
-    }
-});
-
-router.get('/admin/:product_id', async (req, res) => {
-    try {
-        const result = await products.getProductById(req.params.product_id);
         res.send(result);
     } catch (e) {
         HttpError(e, res);
@@ -49,17 +21,14 @@ router.get('/admin/:product_id', async (req, res) => {
 
 router.get('/:product_id', async (req, res) => {
     try {
-        console.log(1);
         const result = await products.getProductById(req.params.product_id);
-        console.log(2);
         res.send(result);
     } catch (e) {
-        console.log(e)
         HttpError(e, res);
     }
 });
 
-router.post('/admin/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         console.log(req.body);
         const result = await products.add(req.body);
@@ -70,7 +39,7 @@ router.post('/admin/', async (req, res) => {
     }
 });
 
-router.put('/admin/:product_id', async (req, res) => {
+router.put('/:product_id', async (req, res) => {
     try {
         const result = await products.update(req.params.product_id, req.body);
 
@@ -80,7 +49,7 @@ router.put('/admin/:product_id', async (req, res) => {
     }
 });
 
-router.patch('/admin/:product_id', async (req, res) => {
+router.patch('/:product_id', async (req, res) => {
     try {
         const result = await products.updateOne(req.params.product_id, req.body);
 
@@ -90,7 +59,7 @@ router.patch('/admin/:product_id', async (req, res) => {
     }
 });
 
-router.delete('/admin/:product_id', async (req, res) => {
+router.delete('/:product_id', async (req, res) => {
     try {
         const result = await products.remove(req.params.product_id);
 

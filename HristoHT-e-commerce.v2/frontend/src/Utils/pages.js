@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Switch, Link } from "react-router-dom";
 import PrivateRoute from '../Components/Utils/PrivateRoute';
@@ -13,17 +13,16 @@ import Catalog from '../Views/Catalog/Catalog';
 import Cart from '../Views/Cart/Cart';
 // import Purchases from '../views/Purchases';
 
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Grid from '@material-ui/core/Grid';
 import HomeIcon from '@material-ui/icons/Home';
 import { useSelector, useDispatch } from "react-redux";
 import { useSnackbar } from 'notistack';
 import { changeUserAction } from "./store/actions";
+import { useLocation } from "react-router-dom";
 import api from "./api";
 
 import Measures from '../Components/Measures/Mesures';
-import { findAllByTestId } from '@testing-library/react';
 
 const pages = {
     test: {
@@ -31,80 +30,70 @@ const pages = {
         permission: ['admin', 'user'],
         exact: true,
         private: false,
+        admin: false,
         component: (props) => (<Measures {...props} >Основна страница</Measures>)
     },
-    productPanel: {
-        path: '/productpanel',
-        permission: ['admin', 'user'],
-        admin: true,
-        exact: true,
-        private: false,
-        component: (props) => (<ProductPanel {...props} >Основна страница</ProductPanel>)
-    },
-    default: {
-        path: '/',
+    user: {
+        path: '/user/',
         permission: [],
         admin: false,
         exact: true,
         private: false,
         component: (props) => (<Catalog {...props} >Основна страница</Catalog>)
     }, login: {
-        path: '/login',
+        path: '/user/login',
         permission: [],
         exact: true,
+        admin: false,
         private: false,
         component: (props) => (<Login {...props} />)
-    }, loginAdmin: {
-        path: '/admin/login',
-        permission: [],
-        exact: true,
-        private: false,
-        component: (props) => (<Login admin={true} {...props} />)
     }, register: {
-        path: '/register',
+        path: '/user/register',
         permission: [],
         exact: true,
+        admin: false,
         private: false,
         component: (props) => (<Register {...props} />)
     }, catalog: {
-        path: '/catalog',
+        path: '/user/catalog',
         permission: [],
         exact: true,
         admin: false,
         private: true,
-        component: (props) => (<div {...props} />)
+        component: (props) => (<Catalog {...props} />)
     }, cart: {
-        path: '/cart',
+        path: '/user/cart',
         permission: [],
         admin: false,
         exact: true,
         private: true,
         component: (props) => (<Cart {...props} />)
-    }, iteminfo: {
-        path: '/iteminfo/:id',
-        permission: ['admin', 'user'],
+    }, productPanel: {
+        path: '/admin/productpanel',
+        permission: [],
+        admin: true,
         exact: true,
-        private: true,
-        component: (props) => (<div {...props} />)
-    }, purchases: {
-        path: '/purchases',
-        permission: ['admin'],
+        private: false,
+        component: (props) => (<ProductPanel {...props} >Основна страница</ProductPanel>)
+    }, loginAdmin: {
+        path: '/admin/login',
+        permission: [],
         exact: true,
-        private: true,
-        component: (props) => (<div {...props} />)
-    },
+        admin: true,
+        private: false,
+        component: (props) => (<Login admin={true} {...props} />)
+    }, admin: {
+        path: '/admin/',
+        permission: [],
+        exact: true,
+        admin: true,
+        private: false,
+        component: (props) => (<div admin={true} {...props} />)
+    }
 }
 
 const pagesButtons = {
-    default: {
-        icon: (props) => <HomeIcon />,
-        text: 'Каталог',
-        position: 'left'
-    }, catalog: {
-        icon: (props) => <HomeIcon />,
-        text: 'Каталог',
-        position: 'left'
-    }, productPanel: {
+    productPanel: {
         icon: (props) => null,
         text: 'Продукти',
         position: 'left'
@@ -112,14 +101,10 @@ const pagesButtons = {
         icon: (props) => null,
         text: 'Количка',
         position: 'right'
-    }/* , iteminfo: {
-        icon: (props) => null,
-        text: 'Информация',
-        position: 'right'
-    } */, purchases: {
-        icon: (props) => null,
-        text: 'Поръчки',
-        position: 'right'
+    }, catalog: {
+        icon: (props) => <HomeIcon />,
+        text: 'Каталог',
+        position: 'left'
     }
 }
 
@@ -136,8 +121,23 @@ const pageButonsWithoutUser = {
 }
 
 export const FormRoutes = () => {
+    const user = useSelector(state => state.user);
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const changeUser = user => dispatch(changeUserAction(user));
+
+    useEffect(() => {
+        changeUser(api.getUser());
+    }, [location.pathname])
+
     return <Switch>
-        {Object.keys(pages).map(pageName => {
+        {Object.keys(pages).filter(pageName => {
+            if (pages[pageName].private) {
+                return pages[pageName].admin === user.admin;
+            } else {
+                return true;
+            }
+        }).map(pageName => {
             if (pages[pageName].private) {
                 return <PrivateRoute key={pageName} {...pages[pageName]} />
             } else {
@@ -155,24 +155,28 @@ const useStyles = makeStyles((theme) => ({
 
 export const FormButtons = (Button) => {
     const classes = useStyles();
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user);
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch();
     const changeUser = user => dispatch(changeUserAction(user));
+    const location = useLocation();
+    const [endpoint, setEndpoint] = useState('user');
 
     useEffect(() => {
-    //    api.getUser();
-       changeUser(api.getUser());
-    }, [])
+        changeUser(api.getUser());
+        const [, endp] = location.pathname.split('/');
+        setEndpoint(endp);
+    }, [location.pathname])
+    // window.localStorage.setItem('user', '{}');
 
     return <Grid container className={classes.root}>
         <Grid item xs container justify="flex-start">
             {Object.keys(pagesButtons)
                 .filter(key => {
-                    let f1 = pagesButtons[key].position === 'left';
-                    let f2 = pages[key].permission.indexOf(user.role) === -1 ? false : true;
+                    const f1 = pagesButtons[key].position === 'left';
+                    const f2 = pages[key].admin === user.admin;
 
-                    return f1 && (f2 || (user.admin && pages[key].admin));
+                    return f1 && f2;
                 })
                 .map(key => (
                     <Grid item>
@@ -185,10 +189,10 @@ export const FormButtons = (Button) => {
         <Grid item xs container justify="flex-end">
             {Object.keys(pagesButtons)
                 .filter(key => {
-                    let f1 = pagesButtons[key].position === 'right';
-                    // let f2 = pages[key].permission.indexOf(user.role) === -1 ? false : true;
+                    const f1 = pagesButtons[key].position === 'right';
+                    const f2 = pages[key].admin === user.admin;
 
-                    return f1; /* && ( *//* f2 || *//*  (user.admin && pages[key].admin)) */;
+                    return f1 && f2;
                 })
                 .map(key => (
                     <Grid item>
@@ -208,7 +212,7 @@ export const FormButtons = (Button) => {
                 ))}
 
             {user.name && <Grid item>
-                <Button startIcon={<ExitToAppIcon />} component={Link} to='/login' onClick={() => {
+                <Button startIcon={<ExitToAppIcon />} component={Link} to={`/${endpoint}/login`} onClick={() => {
                     api.logout()
                         .then(res => {
                             enqueueSnackbar('Вие излязохте успешно', { variant: "success" });

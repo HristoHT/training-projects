@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "database": "nodemon databaseGenerator.js"
   },
   "author": "hht",
   "license": "ISC",
@@ -16,6 +17,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "lorem-ipsum": "^2.0.3",
+    "lorem-picsum": "^1.0.0",
     "nodemon": "^2.0.4",
     "pg": "^8.3.3",
     "socket.io": "^2.3.0"

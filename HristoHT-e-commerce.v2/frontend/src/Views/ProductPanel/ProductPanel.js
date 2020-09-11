@@ -72,7 +72,7 @@ const Row = ({ row }) => {
     }
 
     const updateVisability = (id) => () => {
-        api.request('PATCH', 'productsAdmin', { param: `/${id}`, body: { visable: !visable } })()
+        api.request('PATCH', 'products', { param: `/${id}`, body: { visable: !visable } })()
             .then(data => {
                 enqueueSnackbar(visable ? 'Продуктът е скрит от каталога' : 'Продуктът се въжда в каталога', { variant: "success" });
                 // setProducts(data);
@@ -89,7 +89,7 @@ const Row = ({ row }) => {
     }, [row]);
 
     const deleteProduct = (id) => (e) => {
-        api.request('DELETE', 'productsAdmin', { param: `/${id}` })()
+        api.request('DELETE', 'products', { param: `/${id}` })()
             .then(data => {
                 enqueueSnackbar('Продуктът е изтрит', { variant: "success" });
                 setProducts(data);
@@ -134,7 +134,7 @@ const ProductPanel = ({ goTo, ...props }) => {
     const setProducts = products => dispatch(setProductsAction(products));
 
     useEffect(() => {
-        api.request('GET', 'productsAdmin')()
+        api.request('GET', 'products')()
             .then(data => {
                 setProducts(data);
                 console.log(data)

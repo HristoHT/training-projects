@@ -94,7 +94,7 @@ const controller = (actions) => {
                 const accessToken = await accessTokenFunct(admin);
                 const refreshToken = await refreshTokenFunct(admin);
 
-                return ({ accessToken, refreshToken, user: {...admin, admin:true}, admin: true });
+                return ({ ...admin, admin: true, refreshToken, accessToken });
             } else {
                 throw new CustomError(404, 'Непаравилно име или парола')
             }
@@ -118,7 +118,7 @@ const controller = (actions) => {
                 const accessToken = await accessTokenFunct(user);
                 const refreshToken = await refreshTokenFunct(user);
 
-                return ({ accessToken, refreshToken, user });
+                return ({ accessToken, refreshToken, ...user, admin: false });
             } else {
                 throw new CustomError(404, 'Непаравилно име или парола')
             }

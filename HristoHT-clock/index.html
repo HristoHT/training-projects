@@ -134,7 +134,7 @@
     }
 
     const playground = Plain({ svg: document.getElementById('playground') });
-    const squareSide = 500;
+    const squareSide = 200;
     const centerXY = squareSide;
     const clockRadius = squareSide;
     const clockCenter = new Circle({ x: centerXY, y: centerXY });
@@ -164,10 +164,10 @@
 
         }
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 12; i++) {
             let { x, y } = clockCenter.coordinates;
 
-            toAdd.push(new Circle(rotate({ x: x + centerXY * 0.90, y, deg: i * (360 / 60) })));
+            toAdd.push(new Circle(rotate({ x: x + centerXY * 0.90, y, deg: i * (360 / 12) })));
 
         }
 

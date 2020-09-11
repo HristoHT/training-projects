@@ -30,6 +30,7 @@ import { formatNumber } from "../../Utils/NumberFormat";
 import { useSelector, useDispatch } from 'react-redux';
 import { setMeasuresActions } from "../../Utils/store/actions";
 import { useSnackbar } from 'notistack';
+import ConfirmationDialog from "../Utils/ConfirmationDialog";
 
 import api from '../../Utils/api';
 
@@ -44,9 +45,14 @@ const Row = ({ row }) => {
     const dispatch = useDispatch();
     const setMeasures = measures => dispatch(setMeasuresActions(measures));
     const { enqueueSnackbar } = useSnackbar();
+    const [del, setDel] = useState(false);
 
     const updateMeasure = () => {
         setOpen(true);
+    }
+
+    const handleDelete = () => {
+        setDel(true);
     }
 
     const deleteMeasure = (id) => (e) => {
@@ -64,18 +70,19 @@ const Row = ({ row }) => {
         <TableCell component="th" scope="row">
             {row.name}
         </TableCell>
-        <TableCell align="right">{formatNumber(row.quantity, 3)}</TableCell>
-        <TableCell align="right">{formatNumber(row.price, 2)}</TableCell>
+        <TableCell align="right">{formatNumber(row.quantity, 3)} бр.</TableCell>
+        <TableCell align="right">{formatNumber(row.price, 2)} лв.</TableCell>
         <TableCell align="right">
             <ButtonGroup>
                 <IconButton size="small">
                     <CreateIcon fontSize="small" onClick={updateMeasure} />
                 </IconButton>
                 <IconButton size="small">
-                    <DeleteIcon fontSize="small" onClick={deleteMeasure(row.id)} />
+                    <DeleteIcon fontSize="small" onClick={handleDelete} />
                 </IconButton>
             </ButtonGroup>
         </TableCell>
+        <ConfirmationDialog open={del} setOpen={setDel} callback={deleteMeasure(row.id)} />
         <MeasuresDialog setOpen={setOpen} open={open} id={row.id} update />
     </TableRow>
 }
@@ -103,7 +110,7 @@ const AddItem = ({ goTo, ...props }) => {
     }
 
     return <div className={classes.root}>
-        <Grid xs={6} >
+        <Grid xs={12} >
             <Grid item xs={12} container direction="column" spacing={2} component={Paper}>
                 <Grid item >
                     <Grid item>

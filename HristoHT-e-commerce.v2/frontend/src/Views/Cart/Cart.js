@@ -71,12 +71,19 @@ const Cart = ({ goTo, ...props }) => {
     }, [user]);
 
     const handlePayment = (e) => {
-
+        setResponse({ loading: true, data:[] });
+        api.request('POST', 'carts', { param: `/${user.id}` })()
+            .then(data => {
+                setResponse({ loading: false, data });
+                enqueueSnackbar('Поръчката е завършена', { variant: "success" });
+            })
+            .catch(err => {
+                enqueueSnackbar(err.message, { variant: "error" });
+            });
     }
 
     const handleCancel = (e) => {
         setResponse({ loading: true, data:[] });
-
         api.request('DELETE', 'carts', { param: `/${user.id}` })()
             .then(data => {
                 setResponse({ loading: false, data });
@@ -88,7 +95,7 @@ const Cart = ({ goTo, ...props }) => {
     }
 
     return <Grid container justify="center" className={classes.root} >
-        <Grid item xs={6} container component={Paper} spacing={2}>
+        <Grid item xs={7} container component={Paper} spacing={2}>
             <Grid item xs={12}>
                 <Typography variant='h5' align="center">Количка</Typography>
             </Grid>
@@ -103,7 +110,8 @@ const Cart = ({ goTo, ...props }) => {
                                 <TableRow>
                                     <TableCell>Продукт</TableCell>
                                     <TableCell align="right">Ед. Цена</TableCell>
-                                    <TableCell align="right">Количество</TableCell>
+                                    <TableCell align="right">Количество разфасовки</TableCell>
+                                    <TableCell align="right">Количество от разфасовка</TableCell>
                                     <TableCell align="right">Стойност</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -115,7 +123,8 @@ const Cart = ({ goTo, ...props }) => {
                                         </TableCell>
                                         <TableCell align="right">{formatNumber(row.price, 2)}</TableCell>
                                         <TableCell align="right">{formatNumber(row.quantity, 3)}</TableCell>
-                                        <TableCell align="right">{formatNumber(getNumber(row.price) * getNumber(row.quantity), 2)}лв.</TableCell>
+                                        <TableCell align="right">{formatNumber(row.measure_qantity, 3)}</TableCell>
+                                        <TableCell align="right">{formatNumber(getNumber(row.price) * getNumber(row.quantity) * getNumber(row.measure_qantity), 2)}лв.</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

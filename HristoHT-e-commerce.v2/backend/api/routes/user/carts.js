@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HttpError = require('../../utils/HttpError');
+const HttpError = require('../../../utils/HttpError');
 var carts;
 
 router.use((req, res, next) => {
@@ -18,6 +18,17 @@ router.get('/:user_id', async (req, res) => {
         HttpError(e, res);
     }
 });
+
+router.post('/:user_id', async (req, res) => {
+    try {
+        const result = await carts.finishCart({ user_id: req.params.user_id });
+
+        res.send(result);
+    } catch (e) {
+        console.log(e);
+        HttpError(e, res);
+    }
+})
 
 router.put('/', async (req, res) => {
     try {
